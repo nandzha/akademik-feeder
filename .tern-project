@@ -1,0 +1,11 @@
+{
+	"loadEagerly": [
+		"codebase/webix.js"
+	],
+	"plugins": {
+		"webix": {
+			"baseURL": "/codebase",
+			"paths": {}
+		}
+	}
+}

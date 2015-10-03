@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block pageWrapper %}
+<style type="text/css">
+	body {
+		background-color: #8D5C99;
+		color: #fff;
+		text-align: center;
+		font-size: 28px;
+		background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGwAAAAPCAIAAACOZL1uAAABGklEQVR42u2Y2w6DMAiGy3zDndzp3XZ8TdtRMVhLrI1miUz/K0L9xFBa2OByeFlrnXObWgBgjHG10I82etjPsrXSFNpo0Co9kENpjAW38oPLVVXRQlEU9K7IIzVIoU2B0UZPJqUxlk9ilGnOfbQb4QbK/ZEUraIIyaQ0xoLr8R3VP8FhtTMWnoKVaim8ExP1T+ICZqVPzdIoOO0eUf1z7jnrfJWyR56aRVOYRNPtNaywbnk3ohclqOiDMimNseC8f8q+Juu2r6QT1LgljbF8YxncTDlYTSyBP4vVjDjpC6JvBP3FZaQxlk+iLHLS/NviTKh2TlQ5oM2D8o1lyvi+Uigot/cpPyRXCj3NnAhj/9JIUKY7hWVSGmN9AcsfIylvlaWJAAAAAElFTkSuQmCC);
+	}
+</style>
+	<div id="areaA">
+	{{signature}} <br>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script type="text/javascript" charset="utf-8">
+		webix.ui({
+				view:"window",
+				height:300,
+			    width:350,
+				container:"areaA",
+				position:"center",
+			    head:"Login",
+				body:{
+					view:"form", scroll:false,
+					id:"login",
+					width:350,
+					elements:[
+						// { name:"signature", view:"text", value:"{{signature}}"},
+						{ name:"smt", view:"select", label:"Semester", options:"./sugest/smt"},
+						{ name:"username", view:"text", label:"Username"},
+						{ name:"password", view:"text", type:"password", label:"Password"},
+						{ margin:5, cols:[
+							{ view:"button", label:"Login", click:function(){
+								var form = $$('login');
+								var values = form.getValues();
+
+								if(form.isDirty()){
+									if(!form.validate())
+										return false;
+
+									/*webix.ajax().post("/home", values, function(t,res) {
+										var res = res.json();
+										if (res.messages.login) {
+											window.location.href = "mhs";
+										};
+									});	*/
+									webix.send("",values);
+								};
+							}},
+							{ view:"button", label:"Cancel", click:"$$('login').clear()" }
+						]}
+					]
+				}
+			}).show();
+
+			$$('login').setValues({
+				signature:"{{signature}}"
+			});
+	</script>
+{% endblock %}

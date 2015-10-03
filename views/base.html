@@ -1,0 +1,32 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+
+<head>
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Administrator-{{'site_name'|getVarOptions}}</title>
+
+    <!-- Core CSS - Include with every page -->
+    <link rel="stylesheet" type="text/css" href="{{'codebase/skins/material.css'|base_uri}}" charset="utf-8">
+    <!-- <link rel="stylesheet" type="text/css" href="{{'codebase/webix.css'|base_uri}}" charset="utf-8"> -->
+    <link rel="stylesheet" type="text/css" href="{{'codebase/app.css'|base_uri}}" charset="utf-8">
+
+{% endblock %}
+
+</head>
+
+<body>
+    {% block pageWrapper %}{% endblock %}
+    <script src="{{'codebase/webix.js'|base_uri}}" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript" data-main="{{'assets/js/main'|base_uri}}" src="{{'assets/js/plugins/require.js'|base_uri}}"></script>
+
+    {% block script %}{% endblock %}
+
+</body>
+
+</html>
+
+{% endspaceless %}

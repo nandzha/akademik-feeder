@@ -9,13 +9,14 @@ use Resources;
 
 class Kuliah extends AppResources\Controller
 {
+    protected $data;
     public function __construct()
     {
         parent::__construct();
         $this->is_login();
         $this->request = new Resources\Request;
         $this->uuid = new Libraries\UUID;
-
+        $this->data = $this->propertyAkademik();
     }
 
     private function is_login()
@@ -28,7 +29,7 @@ class Kuliah extends AppResources\Controller
 
     public function index()
     {
-        return $this->view->render('kuliah-matakuliah-list.html');
+        return $this->view->render('kuliah-matakuliah-list.html', $this->data);
     }
 
     public function mklst()
@@ -66,7 +67,7 @@ class Kuliah extends AppResources\Controller
             return $model->update(new Connector\Data\DataAction('update', $this->request->post('id'), $data));
         }
 
-        return $this->view->render('kuliah-subtansi-list.html');
+        return $this->view->render('kuliah-subtansi-list.html', $this->data);
     }
 
     public function kurikulumlst()
@@ -81,7 +82,7 @@ class Kuliah extends AppResources\Controller
             $model = new Models\MatakuliahKurikulum;
             return $model->init();
         }
-        return $this->view->render('kuliah-kurikulum-semester-list.html');
+        return $this->view->render('kuliah-kurikulum-semester-list.html', $this->data);
     }
 
     public function kelaslst()
@@ -102,7 +103,7 @@ class Kuliah extends AppResources\Controller
             return $model->init();
         }
 
-        return $this->view->render('kuliah-kelas-list.html');
+        return $this->view->render('kuliah-kelas-list.html', $this->data);
     }
 
     public function smtlst(){
@@ -116,7 +117,7 @@ class Kuliah extends AppResources\Controller
             return $model->init();
         }
 
-        return $this->view->render('kuliah-add-kelas.html');
+        return $this->view->render('kuliah-add-kelas.html', $this->data);
     }
 
     public function nilailst()
@@ -131,7 +132,7 @@ class Kuliah extends AppResources\Controller
             $model = new Models\Nilai;
             return $model->kuliahNilai();
         }
-        return $this->view->render('kuliah-nilai-list.html');
+        return $this->view->render('kuliah-nilai-list.html', $this->data);
     }
 
     public function aktifitasmhs($p = false)
@@ -140,16 +141,20 @@ class Kuliah extends AppResources\Controller
             $model = new Models\MahasiswaAktifitas;
             return $model->detail();
         }
-        return $this->view->render('kuliah-aktifitas-list.html');
+
+        return $this->view->render('kuliah-aktifitas-list.html', $this->data);
     }
 
     public function statusmhs($p = false)
     {
+        $model = new Models\MahasiswaStatus;
         if ($p == 'data') {
-            $model = new Models\MahasiswaStatus;
             return $model->init();
         }
-        return $this->view->render('kuliah-mhs-status-list.html');
+        if ($p == 'detail') {
+            return $model->detail();
+        }
+        return $this->view->render('kuliah-mhs-status-list.html', $this->data);
     }
 
 }

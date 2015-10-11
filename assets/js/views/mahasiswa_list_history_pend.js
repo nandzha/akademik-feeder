@@ -55,7 +55,6 @@ var ui_scheme = {
                 gravity: 2.2,
                 rows:[
 		    		grd_riwpend,
-                    btn_add
                 ]
             }
     	]
@@ -69,12 +68,13 @@ return {
     	apps.webix();
     },
     onInit: function(){
-		$$("grd_riwpend").bind($$("listmsmhs"), "a.id_pd");
+        $$("grd_riwpend").bind( $$("listmsmhs"), "c.id_reg_pd");
+
         var dp = new webix.DataProcessor({
-            updateFromResponse:true, 
+            updateFromResponse:true,
             autoupdate:true,
-            master: $$("listmsmhs"),
-            url: "connector->./nilai/data",
+            master: $$("grd_riwpend"),
+            url: "connector->./riwpend/data",
             on: handleProcessing
         });
 	}

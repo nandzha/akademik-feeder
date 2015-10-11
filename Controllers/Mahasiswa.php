@@ -6,10 +6,12 @@ use Models;
 
 class Mahasiswa extends AppResources\Controller
 {
+    protected $data;
     public function __construct()
     {
         parent::__construct();
         $this->is_login();
+        $this->data = $this->propertyAkademik();
     }
 
     private function is_login()
@@ -22,7 +24,7 @@ class Mahasiswa extends AppResources\Controller
 
     public function index()
     {
-        return $this->view->render('mahasiswa-list.html');
+        return $this->view->render('mahasiswa-list.html', $this->data);
     }
 
     public function lst()
@@ -39,7 +41,7 @@ class Mahasiswa extends AppResources\Controller
             return $mhs->detail();
         }
 
-        return $this->view->render('mahasiswa-detail.html');
+        return $this->view->render('mahasiswa-detail.html', $this->data);
     }
 
     public function riwpend($p = false)
@@ -48,7 +50,7 @@ class Mahasiswa extends AppResources\Controller
             $mhs = new Models\MahasiswaPt;
             return $mhs->init();
         }
-        return $this->view->render('mahasiswa-list-history-pend.html');
+        return $this->view->render('mahasiswa-list-history-pend.html', $this->data);
     }
 
     public function krslst($p = false)
@@ -57,7 +59,7 @@ class Mahasiswa extends AppResources\Controller
             $mhs = new Models\MahasiswaKrs;
             return $mhs->init();
         }
-        return $this->view->render('mahasiswa-list-krs.html');
+        return $this->view->render('mahasiswa-list-krs.html', $this->data);
     }
 
     public function nilailst($p = false)
@@ -66,7 +68,7 @@ class Mahasiswa extends AppResources\Controller
             $mhs = new Models\Nilai;
             return $mhs->mhsNilai();
         }
-        return $this->view->render('mahasiswa-list-nilai.html');
+        return $this->view->render('mahasiswa-list-nilai.html', $this->data);
     }
 
     public function kuliahaktifitas($p = false)
@@ -75,7 +77,7 @@ class Mahasiswa extends AppResources\Controller
             $mhs = new Models\MahasiswaAktifitas;
             return $mhs->init();
         }
-        return $this->view->render('mahasiswa-list-aktifitas.html');
+        return $this->view->render('mahasiswa-list-aktifitas.html', $this->data);
     }
 
     public function mksmt($p = false)
@@ -84,7 +86,7 @@ class Mahasiswa extends AppResources\Controller
             $mhs = new Models\KurikulumSemester;
             return $mhs->getMkSmt();
         }
-        return $this->view->render('mahasiswa-list-aktifitas.html');
+        return $this->view->render('mahasiswa-list-aktifitas.html', $this->data);
     }
 
 }

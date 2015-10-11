@@ -66,4 +66,11 @@ class Sugest
         $this->conn->render_table('mata_kuliah', 'id_mk', 'nm_mk(value), kode_mk');
     }
 
+    public function mhs()
+    {
+        $this->getFilter('nm_pd');
+        $this->conn->sort("nm_pd ASC");
+        $this->conn->render_table('mahasiswa_suggest', 'id_reg_pd', 'nm_pd(value), nipd');
+    }
+
 }

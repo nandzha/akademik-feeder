@@ -3,18 +3,9 @@ define(['menuTree'], function(){
     var ui_scheme = {};
     var ui_window = {};
     // var ui_popup  = {};
-    // var xhr = webix.ajax().sync().get("/api");
+    // var xhr = webix.ajax().sync().get("./api");
 
     var dataMenu =[
-        /*{id :  "main", uri : null, value :  "Main", open :  true, data : [
-            { id :  "msmhs", uri : "home/msmhs", value :  "Mahasiswa", icon :  "check-square-o", details : "Master Mahasiswa"},
-            { id :  "tbdos", uri : "home/tbdos", value :  "Master Dosen", icon :  "check-square-o", details : "Master Dosen"},
-            { id :  "tbkmk", uri : "home/tbkmk", value :  "Master Matakuliah", icon :  "check-square-o", details : "Master Matakuliah"},
-            { id :  "trakd", uri : "home/trakd", value :  "Trans Akademik", icon :  "check-square-o", details : "Transaksi Akademik"},
-            { id :  "trakm", uri : "home/trakm", value :  "Trans Mahasiswa", icon :  "check-square-o", details : "Transaksi Kuliah Mahasiswa"},
-            { id :  "trnlm", uri : "home/trnlm", value :  "Trans Nilai", icon :  "check-square-o", details : "Transaksi Nilai Mahasiswa"},
-            { id :  "trlsm", uri : "home/trlsm", value :  "Trans Lulus", icon :  "check-square-o", details : "Transaksi Lulus Mahasiswa"},
-        ]}*/
         {id : "m0", url : "", value : "Mahasiswa", details : "Mahasiswa", open :  false, data : [
             {id : "m1", url : "admin/mahasiswa", value : "List Mahasiswa", icon : "check-square-o", details : "List Mahasiswa"},
             {id : "m2", url : "admin/mahasiswa/detail", value : "Detail Mahasiswa", icon : "check-square-o", details : "Detail Mahasiswa"},
@@ -42,7 +33,7 @@ define(['menuTree'], function(){
             {id : "p5", url : "admin/kuliah/kelas", value : "Kelas Perkuliahan", icon : "check-square-o", details : "Kelas Perkuliahan"},
             {id : "p6", url : "admin/kuliah/nilai", value : "Nilai Perkuliahan", icon : "check-square-o", details : "Nilai Perkuliahan"},
             {id : "p7", url : "admin/kuliah/aktifitasmhs", value : "Aktifitas Kuliah MHS", icon : "check-square-o", details : "Aktifitas Kuliah Mahasiswa"},
-            {id : "p8", url :"admin/kuliah/statusmhs", value : "Mahasiswa Lulus/DO", icon : "check-square-o", details : "Mahasiswa Lulus/droput"}
+            {id : "p8", url : "admin/kuliah/statusmhs", value : "Mahasiswa Lulus/DO", icon : "check-square-o", details : "Mahasiswa Lulus/droput"}
         ]},
         {id : "t0", url : "", value : "Tools", details : "Tools", open :  false, data : [
             {id : "t1", url : "admin/tools/sync", value : "Sinkronisasi", icon : "check-square-o", details : "Sinkronisasi Data"},
@@ -63,6 +54,7 @@ define(['menuTree'], function(){
         activeTitle :  true,
         select :  true,
         gravity : 0.2,
+        url:"/twig_template/api/menu",
         ready : function(){
             var state = restore_state();
             this.addCss(state.select[0], "webix_selected");
@@ -86,7 +78,7 @@ define(['menuTree'], function(){
                 }
             },
         },
-        data :  dataMenu
+        // data :  dataMenu
     };
 
     var mainToolbar = {
@@ -94,7 +86,7 @@ define(['menuTree'], function(){
         css : "header",
         elements : [
             // {view :  "label", label :  "<a href='http : //webix.com'><img class='photo' src='/assets/imgs/webix-logotype.svg' height='40' /></a>", width :  200},
-            {view :  "label", label :  "SIM Akademik", width :  200},
+            {view : "label", label:"SIM Akademik", template : "html->toolbar",  width : 500},
             {},
             { height : 46, id :  "person_template", css :  "header_person", borderless : true, width :  180, data :  {id : 3,name :  "Administrator"},
                 template :  function(obj){

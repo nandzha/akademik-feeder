@@ -6,10 +6,12 @@ use Models;
 
 class Prodi extends AppResources\Controller
 {
+    protected $data;
     public function __construct()
     {
         parent::__construct();
         $this->is_login();
+        $this->data = $this->propertyAkademik();
     }
 
     private function is_login()
@@ -22,7 +24,7 @@ class Prodi extends AppResources\Controller
 
     public function index()
     {
-        return $this->view->render('prodi-index.html');
+        return $this->view->render('prodi-index.html', $this->data);
     }
 
     public function matakuliah($p = false)
@@ -31,7 +33,7 @@ class Prodi extends AppResources\Controller
             $mhs = new Models\MahasiswaPt;
             return $mhs->init();
         }
-        return $this->view->render('prodi-matakuliah.html');
+        return $this->view->render('prodi-matakuliah.html', $this->data);
     }
 
 }

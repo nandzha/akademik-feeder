@@ -9,7 +9,16 @@ var grd_aktifitas = {
 	id:"grd_aktifitas",
 	columns:[
 		{ id: "id_smt", header : "semester", width: 100 },
-        { id: "nm_stat_mhs", header : "status mahasiswa", width: 200, editor:"text" },
+        { id: "id_stat_mhs", header : "status mahasiswa", width: 200, editor:"select", options:[
+            { id:'A', value:'AKTIF'},
+            { id:'C', value:'CUTI'},
+            { id:'D', value:'DROP-OUT/PUTUS STUDI'},
+            { id:'G', value:'SEDANG DOUBLE DEGREE'},
+            { id:'K', value:'KELUAR'},
+            { id:'L', value:'LULUS'},
+            { id:'N', value:'NON-AKTIF'},
+            { id:'X', value:'UNKNOWN'}
+        ]},
         { id: "ips", header : "ips", width: 80,editor:"text" },
         { id: "ipk", header : "ipk", width: 80,editor:"text" },
         { id: "sks_smt", header : "sks_smt", width: 80,editor:"text" },
@@ -26,18 +35,17 @@ var btn_add ={
     height:40,
     cols:[
         {},
-        { view: "button", type: "iconButton", icon: "plus", css:"button_success", label: "Add New", width: 130, click:function(obj){
+        { view: "button", type: "iconButton", icon: "plus", css:"button_success", label: "Hitung IPS/IPK", width: 170, click:function(obj){
             var id = $$("listmsmhs").getSelectedId();
+            var mhs = $$("listmsmhs").getSelectedItem();
             if (id) {
                 var data = {
-                    id_smt : "",
-                    nm_stat_mhs : "",
-                    ips : "",
-                    ipk : "",
-                    sks_smt : "",
-                    sks_total : ""
+                    id_reg_pd : mhs.id_reg_pd,
+                    ipk : 0,
+                    sks_total : 0,
+                    id_stat_mhs : 'A'
                 }
-                webix.$$("grd_aktifitas").add(data);
+                $$("grd_aktifitas").add(data);
             }else{
                 webix.message({ type:"error", text:"Please select one", expire:3000});
             }
@@ -74,10 +82,10 @@ return {
     onInit: function(){
 		$$("grd_aktifitas").bind($$("listmsmhs"), "id_reg_pd");
         var dp = new webix.DataProcessor({
-            updateFromResponse:true, 
+            updateFromResponse:true,
             autoupdate:true,
-            master: $$("listmsmhs"),
-            url: "connector->./nilai/data",
+            master: $$("grd_aktifitas"),
+            url: "connector->./kuliahaktifitas/data",
             on: handleProcessing
         });
 	}

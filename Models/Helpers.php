@@ -1,6 +1,7 @@
 <?php
 namespace Models;
 
+use Dhtmlx\Connector;
 use Resources;
 
 class Helpers
@@ -8,12 +9,8 @@ class Helpers
     public function __construct()
     {
         $this->db = new Resources\Database('pddikti');
-        $this->ctrl = new Resources\Controller;
-        $this->uri = new Resources\Uri;
-        $this->content = new Main;
-        $this->panel = new Panels;
+        $this->conn = new Connector\JSONTreeDataConnector($this->db, "MySQLi");
         $this->session = new Resources\Session;
-        $this->cfg = Resources\Config::main();
     }
 
     /**
@@ -44,7 +41,7 @@ class Helpers
 
         $this->db
             ->select()
-            ->from('cms_menu as a')
+            ->from('cms_menu ass a')
             ->where('a.published', '=', '1', 'AND')
             ->where('a.type', '=', $type, 'AND')
             ->orderBy('a.menu_order', 'ASC');
@@ -92,4 +89,63 @@ class Helpers
             ->getVar();
     }
 
+    public function menuInit()
+    {
+        if ($grupId = $this->session->getValue('grupId')) {
+            $this->conn->filter('group_id', $this->session->getValue('grupId'), '=');
+        }
+
+        $this->setFilter();
+        $this->conn->render_table("build_menu_view", "id", $this->setFields(), false, "parent_id");
+    }
+
+    protected function setFilter()
+    {
+        $request = new Resources\Request;
+        $filters = $request->get('filter');
+
+        if ($filters) {
+            $filter = "";
+
+            foreach ($filters as $key => $value) {
+                $filter .= $key . " like '" . $value . "%' AND ";
+            }
+
+            $filter = rtrim($filter, "AND ");
+            $this->conn->filter($filter);
+        }
+        return false;
+    }
+
+    protected function setFields()
+    {
+        $fields = [
+            'id',
+            'parent_id',
+            'value',
+            'url',
+            'menu_order',
+            'details',
+            'icon',
+            'published',
+            // 'open',
+            'type',
+            'group_id',
+        ];
+        return implode(",", $fields);
+    }
+
+    protected function checkChild($data)
+    {
+        if ($this->conn->get_value("has_kids") == 1) {
+            $this->conn->set_kids(true);
+        } else {
+            $this->conn->set_kids(false);
+        }
+
+    }
+
+    public function getSemester($id_smt){
+        return $this->db->getOne( 'semester', ['id_smt'=>$id_smt]);
+    }
 }

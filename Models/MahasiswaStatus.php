@@ -19,42 +19,73 @@ class MahasiswaStatus extends Resources\Validation
 
     public function init()
     {
+        $this->conn->dynamic_loading(30);
+        $this->conn->render_table("list_mahasiswa_status_view", "id_reg_pd", $this->setFields('list'));
+    }
+
+    public function detail()
+    {
         $this->conn->useModel($this);
         $this->conn->dynamic_loading(30);
-        $this->conn->render_table("list_mahasiswa_status_view", "id_reg_pd", $this->setFields());
+        $this->conn->render_table("list_mahasiswa_status_view", "id_reg_pd", $this->setFields('detail'));
     }
 
     public function setRules()
     {
         return [
-            'event_name' => [
-                'rules' => ['required', 'min' => 3, 'callback' => 'eventNameIsExist'],
-                'label' => 'Nama Event',
-                'filter' => ['trim', 'strtolower', 'ucwords'],
+            'id_reg_pd' => [
+                'rules' => ['required']
             ],
         ];
     }
 
     protected function get_values($action)
     {
-        $this->data['event_name'] = $action->get_value("event_name");
-        $this->data['start_date'] = $action->get_value("start_date");
-        $this->data['end_date'] = $action->get_value("end_date");
+        $this->data =  [
+            'id_reg_pd' => $action->get_value("id_reg_pd"),
+            'id_jns_keluar' => $action->get_value("id_jns_keluar"),
+            'tgl_keluar' => $action->get_value("tgl_keluar"),
+            'ket' => $action->get_value("ket"),
+            'jalur_skripsi' => $action->get_value("jalur_skripsi"),
+            'judul_skripsi' => $action->get_value("judul_skripsi"),
+            'bln_awal_bimbingan' => $action->get_value("bln_awal_bimbingan"),
+            'bln_akhir_bimbingan' => $action->get_value("bln_akhir_bimbingan"),
+            'sk_yudisium' => $action->get_value("sk_yudisium"),
+            'tgl_sk_yudisium' => $action->get_value("tgl_sk_yudisium"),
+            'ipk' => $action->get_value("ipk"),
+            'no_seri_ijazah' => $action->get_value("no_seri_ijazah"),
+        ];
     }
 
-    protected function setFields()
+    protected function setFields($table)
     {
         $fields = [
-            "id_reg_pd",
-            "nipd",
-            "nm_pd",
-            "nm_lemb",
-            "mulai_smt",
-            "ket_keluar",
-            "tgl_keluar",
-            "ket",
+            'list' =>[
+                "id_reg_pd",
+                "nipd",
+                "nm_pd",
+                "nm_lemb",
+                "mulai_smt",
+                "ket_keluar",
+                "tgl_keluar",
+                "ket",
+            ],
+            'detail'=>[
+                "id_reg_pd",
+                "tgl_keluar",
+                "ket",
+                "id_jns_keluar",
+                "jalur_skripsi",
+                "judul_skripsi",
+                "bln_awal_bimbingan",
+                "bln_akhir_bimbingan",
+                "sk_yudisium",
+                "tgl_sk_yudisium",
+                "ipk",
+                "no_seri_ijazah"
+            ]
         ];
-        return implode(",", $fields);
+        return implode(",", $fields[$table]);
     }
 
     protected function validation($action)

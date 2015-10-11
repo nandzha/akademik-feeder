@@ -1,11 +1,11 @@
-<?php 
+<?php
 namespace Libraries\AppResources;
 use Resources;
-// use Twig_Loader_Filesystem;
-// use Twig_Environment;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
 
 /**
- * Twig driver 
+ * Twig driver
  */
 class TwigDriver implements ViewDriverInterface {
 
@@ -18,7 +18,7 @@ class TwigDriver implements ViewDriverInterface {
 	 * @var string
 	 */
 	protected $viewPath;
-	
+
 	/**
 	 * Constructor
 	 */
@@ -36,13 +36,13 @@ class TwigDriver implements ViewDriverInterface {
 	 * @return null
 	 */
 	protected function initiate() {
-		$twigLoader = new \Twig_Loader_FileSystem($this->viewPath);
+		$twigLoader = new Twig_Loader_FileSystem($this->viewPath);
 		$twigLoader->addPath(VIEWS, 'app');
-		$this->twig = new \Twig_Environment($twigLoader, $this->args['default']);
-		
+		$this->twig = new Twig_Environment($twigLoader, $this->args['default']);
+
 		$this->twig->addExtension(new AppExtension());
         // $this->twig->addExtension(new \Twig_Extensions_Extension_Intl());
-    	
+
     	if ($this->args['default']['debug'])
     		$this->twig->addExtension(new \Twig_Extension_Debug());
 	}
@@ -50,7 +50,7 @@ class TwigDriver implements ViewDriverInterface {
 
 	/**
 	 * Implement to load template engine seperti twig, blade, atau yang lainya
-	 * @return Twig_Environment 
+	 * @return Twig_Environment
 	 */
 	public function loadView() {
 		$this->initiate();
@@ -59,7 +59,7 @@ class TwigDriver implements ViewDriverInterface {
 
 	/**
 	 * Set view path
-	 * @param string $path 
+	 * @param string $path
 	 */
 	public function setViewPath($path) {
 		$this->viewPath = $path;
@@ -68,7 +68,7 @@ class TwigDriver implements ViewDriverInterface {
 
 	/**
 	 * Get view path
-	 * @return string 
+	 * @return string
 	 */
 	public function getViewPath() {
 		return $this->viewPath;

@@ -49,4 +49,9 @@ class Sugest extends AppResources\Controller
         $this->sugest->mk();
     }
 
+    public function mhs()
+    {
+        $this->sugest->mhs();
+    }
+
 }

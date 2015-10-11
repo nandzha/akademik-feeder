@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block pageWrapper %}
     <link rel="stylesheet" type="text/css" href="{{'assets/bootstrap/css/bootstrap.min.css'|base_uri}}" charset="utf-8">
-
+    <div id="toolbar" style='display:none;'>
+        <div class="header">Semester Belaku: {{semester}}</div>
+    </div>
 	<div id="title" style='display:none;'>
 		<div class="header">Detail Dosen</div>
-	</div>	
+	</div>
 	<div id="profile" style='display:none;'>
 		<div class="row">
-			<div class="col-md-3" align="center"> 
-				<img alt="User Pic" class="img-thumbnail" src="{{'assets/imgs/mhs_photo/#NIMHSMSMHS#.jpg'|base_uri}}" onError="this.src='{{'assets/imgs/undefined.jpg'|base_uri}}';"> 
+			<div class="col-md-3" align="center">
+				<img alt="User Pic" class="img-thumbnail" src="{{'assets/imgs/mhs_photo/#NIMHSMSMHS#.jpg'|base_uri}}" onError="this.src='{{'assets/imgs/undefined.jpg'|base_uri}}';">
 			</div>
-			<div class=" col-md-9"> 
+			<div class=" col-md-9">
 				<table class="table table-condensed">
 					<tbody>
 						<tr>
@@ -57,9 +59,9 @@
 				</table>
 			</div>
 		</div>
-		
+
 	</div>
- 	
+
 {% endblock %}
 
 {% block script %}

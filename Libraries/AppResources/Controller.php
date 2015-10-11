@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Libraries\AppResources;
 
 use Resources, Models, Libraries;
@@ -6,7 +6,7 @@ use Libraries\AppResources\View;
 use Libraries\AppResources\TwigDriver;
 
 /**
- * Custom controller untuk TDD (triptodieng.com) 
+ * Custom controller untuk TDD (triptodieng.com)
  */
 class Controller extends Resources\Controller {
 
@@ -25,7 +25,7 @@ class Controller extends Resources\Controller {
 		parent::__construct();
 
 		$child = get_class($this);
-        
+
         $this->childClass = array(
                             'namespaceArray' => explode( '\\', $child),
                             'namespaceString' => $child
@@ -35,6 +35,7 @@ class Controller extends Resources\Controller {
         $this->setViewPath();
         $this->view    = new View(new TwigDriver, $this->viewPath);
         $this->request = new Resources\Request;
+        $this->session = new Resources\Session;
 	}
 
 	private function setViewPath(){
@@ -46,20 +47,28 @@ class Controller extends Resources\Controller {
 	}
 
 	public function login(){
-		$this->session = new Resources\Session;
-
 		if( $this->session->getValue('penggunaId') ){
 			return true;
 		}
 
 		return false;
 
-	}	
+	}
+
+    public function propertyAkademik(){
+        $helper = new Models\Helpers;
+        $semester = $helper->getSemester($this->session->getValue('idsmt'));
+        $data = [
+            'idsmt'    => $this->session->getValue('idsmt'),
+            'semester' => $semester->nm_smt
+        ];
+        return $data;
+    }
 
 	private function isAccessGranted($module){
 		$this->request = new Resources\Request;
 		$this->user    = new Models\Users;
-		
+
         if( ! $next = $this->request->get('next',FILTER_SANITIZE_URL,FILTER_VALIDATE_URL) )
                 $next = $module;
 
@@ -76,7 +85,7 @@ class Controller extends Resources\Controller {
             'fields' => array('b.url')
         );
 
-        if ($this->user->getOneRole($args)) 
+        if ($this->user->getOneRole($args))
             return true;
 
         return false;
@@ -139,7 +148,7 @@ class Controller extends Resources\Controller {
             $response = array();
             $response["error"] = true;
             $response["message"] = 'Required field(s) ' . substr($error_fields, 0, -2) . ' is missing or empty';
-            
+
             $this->outputJSON($response, 200);
             exit;
         }

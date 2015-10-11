@@ -30,7 +30,7 @@ var grd_subtansi = {
 				text:"The data will be deleted.<br/> Are you sure?", ok:"Yes", cancel:"Cancel",
 				callback:function(res){
 					if(res){
-						$$("grd_penugasan").remove(id);
+						$$("grd_subtansi").remove(id);
 					}
 				}
 			});

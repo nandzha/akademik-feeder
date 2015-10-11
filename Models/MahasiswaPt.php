@@ -28,14 +28,13 @@ class MahasiswaPt extends Resources\Validation
                 a.tmpt_lahir,
                 a.tgl_lahir,
                 a.jk,
-                b.nm_agama,
                 c.*
             FROM
                 mahasiswa a
-            INNER JOIN agama b ON a.id_agama = b.id_agama
             LEFT JOIN (
                 SELECT
                     aa.id_pd,
+                    aa.id_reg_pd,
                     aa.nipd,
                     bb.nm_jns_daftar,
                     aa.mulai_smt,
@@ -84,12 +83,12 @@ class MahasiswaPt extends Resources\Validation
     {
         $fields = [
             "id_pd",
+            "id_reg_pd",
             "nipd",
             "nm_pd",
             "tmpt_lahir",
             "tgl_lahir",
             "jk",
-            "nm_agama",
             "nm_jns_daftar",
             "mulai_smt",
             "tgl_masuk_sp",

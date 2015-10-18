@@ -1,16 +1,14 @@
 <?php
 namespace Models;
 
-use Resources;
-use Libraries;
+use Libraries\AppResources;
 
-class Sync
+class Sync extends AppResources\Models
 {
     public function __construct()
     {
-        $this->db = new Resources\Database('pddikti');
-        $this->uuid = new Libraries\UUID;
-        $this->session = new Resources\Session;
+        parent::__construct();
+        $this->ruleName = 'mahasiswa';
     }
 
     public function createTempTable($table, $column=[]){

@@ -4,6 +4,7 @@ namespace Controllers;
 use Libraries\AppResources;
 use Models;
 use Resources;
+use Libraries;
 
 class Test extends AppResources\Controller
 {
@@ -267,4 +268,57 @@ class Test extends AppResources\Controller
         }
     }
 
+    /**
+     * baca form validation rule dati database
+     * @return [type] [description]
+     */
+    public function rules(){
+        $helpers = new Models\Helpers;
+        $rules = $helpers->get_rules('mahasiswa');
+        var_dump($rules);
+    }
+
+    /**
+     * explode campuran assosiative
+     * @return [type] [description]
+     */
+    public function walk(){
+        $string  = "required,min=>3";
+        $partial = explode(',', $string);
+        $final   = array();
+        array_walk($partial, function($val, $key) use(&$final){
+            $subArray = explode('=>', $val);
+            if ( count($subArray) == 1 )
+                $final[$key] = $val;
+            else{
+                list($key, $value) = $subArray;
+                $final[$key] = $value;
+            }
+        });
+        var_dump($final);
+    }
+
+    /**
+     * model versi baru ambil dari library appresource
+     * @return [type] [description]
+     */
+    public function models(){
+        $test = new Models\Test;
+        // $test->init();
+        var_dump($test->setRules());
+    }
+
+    public function nilaiExcel(){
+        $nilai = new Models\ReadNilai;
+        $data = $nilai->readExcel();
+
+        // die(var_dump($nilai->readExcel()));
+        $this->outputJSON($data, 200);
+    }
+
+    public function nilaiDb(){
+        $nilai = new Models\ReadNilai;
+        $data = $nilai->readDb();
+        $this->outputJSON($data, 200);
+    }
 }

@@ -54,4 +54,8 @@ class Sugest extends AppResources\Controller
         $this->sugest->mhs();
     }
 
+    public function bobotnilai()
+    {
+        $this->sugest->bobotnilai();
+    }
 }

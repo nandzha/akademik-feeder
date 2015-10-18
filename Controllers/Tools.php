@@ -37,7 +37,7 @@ class Tools extends AppResources\Controller
         return $this->view->render('tools-sync.html', $this->data);
     }
 
-    public function trakm($p = false)
+    public function trakm()
     {
         $model = new Models\MahasiswaAktifitas;
 
@@ -58,6 +58,16 @@ class Tools extends AppResources\Controller
     public function syncAccess()
     {
         return $this->view->render('tools-sync-access.html', $this->data);
+    }
+
+    public function nilaiExcel($p=false)
+    {
+        if ($p == 'data') {
+            $nilai = new Models\ReadNilai;
+            $data  = $nilai->readExcel();
+            $this->outputJSON($data, 200);
+        }
+        return $this->view->render('tools-nilai-excel.html', $this->data);
     }
 
 }

@@ -1,20 +1,16 @@
 <?php
 namespace Models;
 
-use Dhtmlx\Connector;
-use Resources;
+use Libraries\AppResources;
 
-class MahasiswaStatus extends Resources\Validation
+class MahasiswaStatus extends AppResources\Models
 {
     protected $data = [];
-    protected $checkEventName = true;
 
     public function __construct()
     {
         parent::__construct();
-        $this->db = new Resources\Database('pddikti');
-        $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
-        $this->session = new Resources\Session;
+        $this->ruleName = 'mahasiswa';
     }
 
     public function init()
@@ -34,14 +30,14 @@ class MahasiswaStatus extends Resources\Validation
     {
         return [
             'id_reg_pd' => [
-                'rules' => ['required']
+                'rules' => ['required'],
             ],
         ];
     }
 
     protected function get_values($action)
     {
-        $this->data =  [
+        $this->data = [
             'id_reg_pd' => $action->get_value("id_reg_pd"),
             'id_jns_keluar' => $action->get_value("id_jns_keluar"),
             'tgl_keluar' => $action->get_value("tgl_keluar"),
@@ -60,7 +56,7 @@ class MahasiswaStatus extends Resources\Validation
     protected function setFields($table)
     {
         $fields = [
-            'list' =>[
+            'list' => [
                 "id_reg_pd",
                 "nipd",
                 "nm_pd",
@@ -70,7 +66,7 @@ class MahasiswaStatus extends Resources\Validation
                 "tgl_keluar",
                 "ket",
             ],
-            'detail'=>[
+            'detail' => [
                 "id_reg_pd",
                 "tgl_keluar",
                 "ket",
@@ -82,36 +78,10 @@ class MahasiswaStatus extends Resources\Validation
                 "sk_yudisium",
                 "tgl_sk_yudisium",
                 "ipk",
-                "no_seri_ijazah"
-            ]
+                "no_seri_ijazah",
+            ],
         ];
         return implode(",", $fields[$table]);
-    }
-
-    protected function validation($action)
-    {
-
-        if (!$this->validate($this->data)) {
-            $action->invalid();
-            $action->set_response_attribute("details", $this->messages());
-            return false;
-        }
-        return true;
-    }
-
-    protected function messages()
-    {
-        $msg = $this->errorMessages();
-        $text = "";
-
-        if ($msg) {
-            foreach ($msg as $key => $value) {
-                $text .= $key . " : " . $value . ", ";
-            }
-        }
-
-        $text = rtrim($text, ", ");
-        return $text;
     }
 
     public function insert($action)

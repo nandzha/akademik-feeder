@@ -9,9 +9,8 @@
     <title> Administrator-{{'site_name'|getVarOptions}}</title>
 
     <!-- Core CSS - Include with every page -->
-    <link rel="stylesheet" type="text/css" href="{{'codebase/skins/material.css'|base_uri}}" charset="utf-8">
-    <!-- <link rel="stylesheet" type="text/css" href="{{'codebase/webix.css'|base_uri}}" charset="utf-8"> -->
-    <link rel="stylesheet" type="text/css" href="{{'codebase/app.css'|base_uri}}" charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{'assets/css/material.css'|base_uri}}" charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{'assets/css/app.css'|base_uri}}" charset="utf-8">
 
 {% endblock %}
 
@@ -19,9 +18,8 @@
 
 <body>
     {% block pageWrapper %}{% endblock %}
-    <script src="{{'codebase/webix.js'|base_uri}}" type="text/javascript" charset="utf-8"></script>
-
-    <script type="text/javascript" data-main="{{'assets/js/main'|base_uri}}" src="{{'assets/js/plugins/require.js'|base_uri}}"></script>
+    <script src="{{'bower_components/webix/codebase/webix.js'|base_uri}}" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" data-main="{{'app/main'|base_uri}}" src="{{'bower_components/requirejs/require.js'|base_uri}}"></script>
 
     {% block script %}{% endblock %}
 

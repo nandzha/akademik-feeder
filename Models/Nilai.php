@@ -1,20 +1,16 @@
 <?php
 namespace Models;
 
-use Dhtmlx\Connector;
-use Resources;
+use Libraries\AppResources;
 
-class Nilai extends Resources\Validation
+class Nilai extends AppResources\Models
 {
     protected $data = [];
-    protected $checkEventName = true;
 
     public function __construct()
     {
         parent::__construct();
-        $this->db = new Resources\Database('pddikti');
-        $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
-        $this->session = new Resources\Session;
+        $this->ruleName = 'mahasiswa';
     }
 
     public function lists()
@@ -124,76 +120,73 @@ class Nilai extends Resources\Validation
             'id_reg_pd' => [
                 'rules' => ['required'],
             ],
+            'nilai_angka' => [
+                'rules' => ['max' => 3, "numeric", 'callback' => 'generateNilaiHuruf'],
+            ],
             'nilai_huruf' => [
-                'rules' => ['max'=>3],
+                'rules' => ['max' => 3],
                 'filter' => ['trim', 'strtoupper', 'ucwords'],
+            ],
+            'nilai_indeks' => [
+                'rules' => ['max' => 3, "numeric"],
             ],
         ];
     }
 
-    protected function nilaiIndeks($id_sms, $nilai_huruf){
-        $data =  $this->db->getOne( 'bobot_nilai',
-            [
-                "id_sms"      => $id_sms,
-                "nilai_huruf" => trim(strtoupper($nilai_huruf))
-            ], ["nilai_indeks"] );
+    protected function generateNilaiHuruf($field, $value, $label)
+    {
+        $v = $this->value();
 
-        return $data->nilai_indeks;
+        $criteria = [
+            'id_sms' => $this->session->getValue('desc'),
+            'bobot_nilai_min' => $value,
+        ];
+
+        $this->db->where('id_sms', '=', $this->session->getValue('desc'), 'AND');
+        $this->db->where('bobot_nilai_min', '>=', $value, 'OR');
+        $this->db->where('bobot_nilai_maks', '<=', $value);
+
+        $bobot = $this->db->getOne('bobot_nilai');
+        if ($bobot) {
+            $v['nilai_huruf'] = $bobot->nilai_huruf;
+            $v['nilai_index'] = $bobot->nilai_indeks;
+            return true;
+        }
+
+        $this->setErrorMessage($field, $label . ' Tidak ada range nilai');
+
+        return false;
+    }
+
+    protected function parsingNilai($nilai, $huruf = true)
+    {
+
+        if (empty($nilai) || $nilai === '') {
+            return true;
+        }
+
+        $nilai = explode("#", $nilai);
+
+        $nilai_huruf = trim($nilai[0]);
+        $nilai_indeks = $nilai[1];
+
+        if ($huruf) {
+            return $nilai_huruf;
+        }
+
+        return $nilai_indeks;
     }
 
     protected function get_values($action)
     {
         $this->data = [
-            'id_kls'       => $action->get_value("id_kls"),
-            'id_reg_pd'    => $action->get_value("id_reg_pd"),
-            'nilai_huruf'  => $action->get_value("nilai_huruf"),
-            'nilai_indeks' => $this->nilaiIndeks($action->get_value("id_sms"), $action->get_value("nilai_huruf")),
+            'id_kls' => $action->get_value("id_kls"),
+            'id_reg_pd' => $action->get_value("id_reg_pd"),
+            'nilai_angka' => $action->get_value("nilai_angka"),
+            'nilai_huruf' => $this->parsingNilai($action->get_value("nilai_huruf"), true),
+            'nilai_indeks' => $this->parsingNilai($action->get_value("nilai_huruf"), false),
             // otomatis dari tabel bobot_nilai berdasarkan nilai dan id_sms
         ];
-    }
-
-    protected function setFilter()
-    {
-        $request = new Resources\Request;
-        $filters = $request->get('filter');
-
-        if ($filters) {
-            $filter = "";
-
-            foreach ($filters as $key => $value) {
-                $filter .= $key . " like '" . $value . "%' AND ";
-            }
-
-            $filter = rtrim($filter, "AND ");
-            $this->conn->filter($filter);
-        }
-        return false;
-    }
-
-    protected function validation($action)
-    {
-
-        if (!$this->validate($this->data)) {
-            $action->invalid();
-            $action->set_response_attribute("details", $this->messages());
-            return false;
-        }
-        return $this->value();
-    }
-
-    protected function messages()
-    {
-        $msg = $this->errorMessages();
-        $text = "";
-
-        if ($msg) {
-            foreach ($msg as $key => $value) {
-                $text .= $key . " : " . $value . ", ";
-            }
-        }
-
-        $text = rtrim($text, ", ");
-        return $text;
     }
 
     protected function setFields($table)
@@ -235,7 +228,7 @@ class Nilai extends Resources\Validation
                 "nm_pd",
                 "jk",
                 "nm_prodi",
-            ]
+            ],
         ];
         return implode(",", $fields[$table]);
     }

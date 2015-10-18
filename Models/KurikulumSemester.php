@@ -1,29 +1,24 @@
 <?php
 namespace Models;
 
-use Dhtmlx\Connector;
-use Libraries;
-use Resources;
+use Libraries\AppResources;
 
-class KurikulumSemester extends Resources\Validation
+class KurikulumSemester extends AppResources\Models
 {
     protected $data = [];
-    protected $checkEventName = true;
 
     public function __construct()
     {
         parent::__construct();
-        $this->db = new Resources\Database('pddikti');
-        $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
-        $this->uuid = new Libraries\UUID;
-        $this->session = new Resources\Session;
+        $this->ruleName = 'mahasiswa';
     }
 
     public function init()
     {
         $this->conn->useModel($this);
+        $this->setFilter();
         $this->conn->dynamic_loading(30);
-        $this->conn->render_table("kurikulum", "id_kurikulum_sp", $this->setFields("list"));
+        $this->conn->render_table("kurikulum_list_view", "id_kurikulum_sp", $this->setFields("list"));
     }
 
     public function detail()
@@ -85,25 +80,6 @@ class KurikulumSemester extends Resources\Validation
         ];
     }
 
-    protected function setFilter()
-    {
-        $request = new Resources\Request;
-        $filters = $request->get('filter');
-
-        if ($filters) {
-            $filter = "";
-            foreach ($filters as $key => $value) {
-                $filter .= $key . " like '" . $value . "%' AND ";
-            }
-
-            $filter = rtrim($filter, "AND ");
-
-            $this->conn->filter($filter);
-        }
-
-        return false;
-    }
-
     protected function setFields($table)
     {
         $fields = [
@@ -114,6 +90,7 @@ class KurikulumSemester extends Resources\Validation
                 "jml_sks_wajib",
                 "jml_sks_pilihan",
                 "id_sms",
+                "nm_prodi",
                 "id_jenj_didik",
                 "id_smt_berlaku",
             ],
@@ -143,31 +120,6 @@ class KurikulumSemester extends Resources\Validation
             ],
         ];
         return implode(",", $fields[$table]);
-    }
-
-    protected function validation($action)
-    {
-        if (!$this->validate($this->data)) {
-            $action->invalid();
-            $action->set_response_attribute("details", $this->messages());
-            return false;
-        }
-        return true;
-    }
-
-    protected function messages()
-    {
-        $msg = $this->errorMessages();
-        $text = "";
-
-        if ($msg) {
-            foreach ($msg as $key => $value) {
-                $text .= $key . " : " . $value . ", ";
-            }
-        }
-
-        $text = rtrim($text, ", ");
-        return $text;
     }
 
     public function insert($action)

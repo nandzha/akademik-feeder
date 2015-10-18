@@ -1,18 +1,17 @@
 <?php
 namespace Models;
 
-use Dhtmlx\Connector;
+use Libraries\AppResources;
 use Resources;
 
-class Sugest
+class Sugest extends AppResources\Models
 {
 
     public function __construct()
     {
-        $this->db = new Resources\Database('pddikti');
-        $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
+        parent::__construct();
         $this->request = new Resources\Request;
-        $this->session = new Resources\Session;
+        $this->ruleName = 'mahasiswa';
     }
 
     protected function getFilter($key)
@@ -71,6 +70,16 @@ class Sugest
         $this->getFilter('nm_pd');
         $this->conn->sort("nm_pd ASC");
         $this->conn->render_table('mahasiswa_suggest', 'id_reg_pd', 'nm_pd(value), nipd');
+    }
+
+    public function bobotnilai()
+    {
+        if ($this->session->getValue('desc') != 'ALL') {
+            $this->conn->filter('id_sms', $this->session->getValue('desc'), '=');
+        }
+
+        $this->conn->sort("nilai_huruf ASC");
+        $this->conn->render_table('suggest_bobot_nilai', 'id', 'value');
     }
 
 }

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block pageWrapper %}
+    <div id="toolbar" style='display:none;'>
+        <div class="header">Semester Belaku: {{semester}}</div>
+    </div>
+	<div id="title" style='display:none;'>
+		<div class="header">Registrasi Mahasiswa</div>
+	</div>
+
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+	    require(["views/mahasiswa_registrasi"], function(app){
+	    	app.ui();
+	    	app.onInit();
+	    });
+	</script>
+
+{% endblock %}

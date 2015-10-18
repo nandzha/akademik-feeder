@@ -89,4 +89,13 @@ class Mahasiswa extends AppResources\Controller
         return $this->view->render('mahasiswa-list-aktifitas.html', $this->data);
     }
 
+    public function registrasi($p = false)
+    {
+        if ($p == 'data') {
+            $model = new Models\Registrasi;
+            return $model->init();
+        }
+        return $this->view->render('mahasiswa-registrasi.html', $this->data);
+    }
+
 }

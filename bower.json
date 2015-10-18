@@ -1,0 +1,14 @@
+{
+  "name": "twig_template",
+  "version": "2.0.0",
+  "authors": [
+    "Baihaqy Aviq <aviq.baihaqy@gmail.com>"
+  ],
+  "description": "siakad",
+  "componentsDirectory": "plugins/",
+  "dependencies": {
+    "webix": "~3.0.4",
+    "bootstrap-css-only": "~3.3.5",
+    "requirejs": "~2.1.20"
+  }
+}

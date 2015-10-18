@@ -1,22 +1,16 @@
 <?php
 namespace Models;
 
-use Dhtmlx\Connector;
-use Resources;
-use Libraries;
+use Libraries\AppResources;
 
-class KelasKuliah extends Resources\Validation
+class KelasKuliah extends AppResources\Models
 {
     protected $data = [];
-    protected $checkEventName = true;
 
     public function __construct()
     {
         parent::__construct();
-        $this->db = new Resources\Database('pddikti');
-        $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
-        $this->uuid = new Libraries\UUID;
-        $this->session = new Resources\Session;
+        $this->ruleName = 'mahasiswa';
     }
 
     public function init()
@@ -36,47 +30,29 @@ class KelasKuliah extends Resources\Validation
     {
         return [
             'id_smt' => [
-                'rules' => ['required']
+                'rules' => ['required'],
             ],
             'id_sms' => [
-                'rules' => ['required']
+                'rules' => ['required'],
             ],
             'id_mk' => [
-                'rules' => ['required']
+                'rules' => ['required'],
             ],
         ];
-    }
-
-    protected function setFilter()
-    {
-        $request = new Resources\Request;
-        $filters = $request->get('filter');
-
-        if ($filters) {
-            $filter = "";
-
-            foreach ($filters as $key => $value) {
-                $filter .= $key . " like '" . $value . "%' AND ";
-            }
-
-            $filter = rtrim($filter, "AND ");
-            $this->conn->filter($filter);
-        }
-        return false;
     }
 
     protected function get_values($action)
     {
         $this->data = [
-            'id_sms'       => $action->get_value("id_sms"),
-            'id_smt'       => $action->get_value("id_smt"),
-            'id_mk'        => $action->get_value("id_mk"),
-            'nm_kls'       => $action->get_value("nm_kls"),
-            'sks_mk'       => $action->get_value("sks_mk"),
-            'sks_tm'       => $action->get_value("sks_tm"),
-            'sks_prak'     => $action->get_value("sks_prak"),
+            'id_sms' => $action->get_value("id_sms"),
+            'id_smt' => $action->get_value("id_smt"),
+            'id_mk' => $action->get_value("id_mk"),
+            'nm_kls' => $action->get_value("nm_kls"),
+            'sks_mk' => $action->get_value("sks_mk"),
+            'sks_tm' => $action->get_value("sks_tm"),
+            'sks_prak' => $action->get_value("sks_prak"),
             'sks_prak_lap' => $action->get_value("sks_prak_lap"),
-            'sks_sim'      => $action->get_value("sks_sim"),
+            'sks_sim' => $action->get_value("sks_sim"),
 
         ];
     }
@@ -94,36 +70,10 @@ class KelasKuliah extends Resources\Validation
                 "nm_mk",
                 "nm_kls",
                 "sks_mk",
-                "nm_smt"
-            ]
+                "nm_smt",
+            ],
         ];
         return implode(",", $fields[$table]);
-    }
-
-    protected function validation($action)
-    {
-
-        if (!$this->validate($this->data)) {
-            $action->invalid();
-            $action->set_response_attribute("details", $this->messages());
-            return false;
-        }
-        return true;
-    }
-
-    protected function messages()
-    {
-        $msg = $this->errorMessages();
-        $text = "";
-
-        if ($msg) {
-            foreach ($msg as $key => $value) {
-                $text .= $key . " : " . $value . ", ";
-            }
-        }
-
-        $text = rtrim($text, ", ");
-        return $text;
     }
 
     public function insert($action)

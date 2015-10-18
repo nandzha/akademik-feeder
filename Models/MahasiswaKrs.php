@@ -1,20 +1,16 @@
 <?php
 namespace Models;
 
-use Dhtmlx\Connector;
-use Resources;
+use Libraries\AppResources;
 
-class MahasiswaKrs extends Resources\Validation
+class MahasiswaKrs extends AppResources\Models
 {
     protected $data = [];
-    protected $checkEventName = true;
 
     public function __construct()
     {
         parent::__construct();
-        $this->db = new Resources\Database('pddikti');
-        $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
-        $this->session = new Resources\Session;
+        $this->ruleName = 'mahasiswa';
     }
 
     public function init()
@@ -59,24 +55,6 @@ class MahasiswaKrs extends Resources\Validation
         ];
     }
 
-    protected function setFilter()
-    {
-        $request = new Resources\Request;
-        $filters = $request->get('filter');
-
-        if ($filters) {
-            $filter = "";
-
-            foreach ($filters as $key => $value) {
-                $filter .= $key . " like '" . $value . "%' AND ";
-            }
-
-            $filter = rtrim($filter, "AND ");
-            $this->conn->filter($filter);
-        }
-        return false;
-    }
-
     protected function setFields()
     {
         $fields = [
@@ -100,32 +78,6 @@ class MahasiswaKrs extends Resources\Validation
             'nilai_angka' => null,
             'nilai_indeks' => null,
         ];
-    }
-
-    protected function validation($action)
-    {
-
-        if (!$this->validate($this->data)) {
-            $action->invalid();
-            $action->set_response_attribute("details", $this->messages());
-            return false;
-        }
-        return true;
-    }
-
-    protected function messages()
-    {
-        $msg = $this->errorMessages();
-        $text = "";
-
-        if ($msg) {
-            foreach ($msg as $key => $value) {
-                $text .= $key . " : " . $value . ", ";
-            }
-        }
-
-        $text = rtrim($text, ", ");
-        return $text;
     }
 
     public function insert($action)

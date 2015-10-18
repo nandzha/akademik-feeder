@@ -145,7 +145,69 @@ class Helpers
 
     }
 
-    public function getSemester($id_smt){
-        return $this->db->getOne( 'semester', ['id_smt'=>$id_smt]);
+    public function getSemester($id_smt)
+    {
+        return $this->db->getOne('semester', ['id_smt' => $id_smt]);
+    }
+
+    public function get_rules($name)
+    {
+        $name = $this->db
+            ->getOne('cms_validation', ['name' => $name, 'a_active' => '1'], ['id']);
+
+        $this->db
+            ->select()
+            ->from('cms_validation')
+            ->where('a_active', '=', '1', 'AND')
+            ->where('parent_id', '=', $name->id);
+
+        $dummy = array(
+            'name' => array(
+                'rules' => array(
+                    'required',
+                    'min' => 3
+                ),
+                'label' => 'Full Name',
+                'filter' => array('trim', 'strtolower', 'ucwords')
+            ),
+            'username' => array(
+                'rules' => array(
+                    'required',
+                    'min' => 3,
+                    'max' => 10,
+                    'regex' => '/^([-a-z0-9_-])+$/i',
+                    'callback' => 'usernameExists'
+                ),
+                'label' => 'Username',
+                'filter' => array('trim', 'strtolower')
+            )
+        );
+
+        if ($result = $this->db->getAll()) {
+            foreach ($result as $r) {
+                $rules[$r->name] = [
+                    'rules'  => $this->toArray($r->rules),
+                    'label'  => $r->label,
+                    'filter' => $this->toArray($r->filter)
+                ];
+            }
+            return $rules;
+        }
+        return false;
+    }
+
+    public function toArray($string){
+        $partial = explode(',', $string);
+        $final   = array();
+        array_walk($partial, function($val, $key) use(&$final){
+            $subArray = explode('=>', $val);
+            if ( count($subArray) == 1 )
+                $final[$key] = $val;
+            else{
+                list($key, $value) = $subArray;
+                $final[$key] = $value;
+            }
+        });
+        return $final;
     }
 }

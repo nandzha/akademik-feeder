@@ -1,22 +1,16 @@
 <?php
 namespace Models;
 
-use Dhtmlx\Connector;
-use Resources;
-use Libraries;
+use Libraries\AppResources;
 
-class DosenAktifitas extends Resources\Validation
+class DosenAktifitas extends AppResources\Models
 {
     protected $data = [];
-    protected $checkEventName = true;
 
     public function __construct()
     {
         parent::__construct();
-        $this->db   = new Resources\Database('pddikti');
-        $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
-        $this->uuid = new Libraries\UUID;
-        $this->session = new Resources\Session;
+        $this->ruleName = 'mahasiswa';
     }
 
     public function init()
@@ -77,29 +71,12 @@ class DosenAktifitas extends Resources\Validation
     protected function get_values($action)
     {
         $this->data = [
-            'id_kls'      => $action->get_value('id_kls'),
-            'id_reg_ptk'  => $action->get_value('id_reg_ptk'),
-            'id_jns_eval' => '1'
+            'id_kls' => $action->get_value('id_kls'),
+            'id_reg_ptk' => $action->get_value('id_reg_ptk'),
+            'id_jns_eval' => '1',
         ];
     }
 
-    protected function setFilter()
-    {
-        $request = new Resources\Request;
-        $filters = $request->get('filter');
-
-        if ($filters) {
-            $filter = "";
-
-            foreach ($filters as $key => $value) {
-                $filter .= $key . " like '" . $value . "%' AND ";
-            }
-
-            $filter = rtrim($filter, "AND ");
-            $this->conn->filter($filter);
-        }
-        return false;
-    }
     protected function setFields()
     {
         $fields = [
@@ -111,31 +88,6 @@ class DosenAktifitas extends Resources\Validation
             "jml_tm_real",
         ];
         return implode(",", $fields);
-    }
-    protected function validation($action)
-    {
-
-        if (!$this->validate($this->data)) {
-            $action->invalid();
-            $action->set_response_attribute("details", $this->messages());
-            return false;
-        }
-        return $this->value();
-    }
-
-    protected function messages()
-    {
-        $msg = $this->errorMessages();
-        $text = "";
-
-        if ($msg) {
-            foreach ($msg as $key => $value) {
-                $text .= $key . " : " . $value . ", ";
-            }
-        }
-
-        $text = rtrim($text, ", ");
-        return $text;
     }
 
     public function insert($action)

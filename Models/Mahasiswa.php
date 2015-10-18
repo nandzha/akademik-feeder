@@ -1,22 +1,16 @@
 <?php
 namespace Models;
 
-use Dhtmlx\Connector;
-use Libraries;
-use Resources;
+use Libraries\AppResources;
 
-class Mahasiswa extends Resources\Validation
+class Mahasiswa extends AppResources\Models
 {
     public $data = [];
-    protected $checkEventName = true;
 
     public function __construct()
     {
         parent::__construct();
-        $this->db = new Resources\Database('pddikti');
-        $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
-        $this->uuid = new Libraries\UUID;
-        $this->session = new Resources\Session;
+        $this->ruleName = 'mahasiswa';
     }
 
     public function init()
@@ -49,30 +43,11 @@ class Mahasiswa extends Resources\Validation
         ];
     }
 
-    protected function setFilter()
-    {
-        $request = new Resources\Request;
-        $filters = $request->get('filter');
-
-        if ($filters) {
-            $filter = "";
-            foreach ($filters as $key => $value) {
-                $filter .= $key . " like '" . $value . "%' AND ";
-            }
-
-            $filter = rtrim($filter, "AND ");
-
-            $this->conn->filter($filter);
-        }
-
-        return false;
-    }
-
     protected function setFields($table)
     {
         $fields = [
             'list' => [
-                'id_pd','id_reg_pd', 'nm_pd', 'nipd', 'jk', 'nm_agama',
+                'id_pd', 'id_reg_pd', 'nm_pd', 'nipd', 'jk', 'nm_agama',
                 'tgl_lahir', 'nm_lemb', 'nm_stat_mhs', 'id_sms',
             ],
             'detail' => [
@@ -107,32 +82,6 @@ class Mahasiswa extends Resources\Validation
                 'nm_pd' => $action->get_value("nm_pd"),
             ];
         }
-    }
-
-    protected function validation($action)
-    {
-
-        if (!$this->validate($this->data)) {
-            $action->invalid();
-            $action->set_response_attribute("details", $this->messages());
-            return false;
-        }
-        return true;
-    }
-
-    protected function messages()
-    {
-        $msg = $this->errorMessages();
-        $text = "";
-
-        if ($msg) {
-            foreach ($msg as $key => $value) {
-                $text .= $key . " : " . $value . ", ";
-            }
-        }
-
-        $text = rtrim($text, ", ");
-        return $text;
     }
 
     public function insert($action, $return = true)

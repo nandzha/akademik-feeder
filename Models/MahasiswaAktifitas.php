@@ -1,10 +1,9 @@
 <?php
 namespace Models;
 
-use Dhtmlx\Connector;
-use Resources;
+use Libraries\AppResources;
 
-class MahasiswaAktifitas extends Resources\Validation
+class MahasiswaAktifitas extends AppResources\Models
 {
     protected $data = [];
     protected $checkAkm = true;
@@ -12,9 +11,7 @@ class MahasiswaAktifitas extends Resources\Validation
     public function __construct()
     {
         parent::__construct();
-        $this->db = new Resources\Database('pddikti');
-        $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
-        $this->session = new Resources\Session;
+        $this->ruleName = 'mahasiswa';
     }
 
     public function init()
@@ -38,7 +35,7 @@ class MahasiswaAktifitas extends Resources\Validation
         $conn->add("data", $mhs_pt);
         $conn->add("data", $mhs);
         $conn->render();
-        */
+         */
         $this->setFilter();
         $this->conn->dynamic_loading(10);
         $this->conn->sort("id_smt DESC");
@@ -79,14 +76,14 @@ class MahasiswaAktifitas extends Resources\Validation
     {
         return [
             'id_reg_pd' => [
-                'rules' => ['required', 'callback' => 'akmIsExist']
+                'rules' => ['required', 'callback' => 'akmIsExist'],
             ],
         ];
     }
 
     protected function akmIsExist($field, $value, $label)
     {
-        $v      = $this->value();
+        $v = $this->value();
         $id_smt = $this->session->getValue('idsmt');
 
         if (!$this->checkAkm) {
@@ -95,7 +92,7 @@ class MahasiswaAktifitas extends Resources\Validation
 
         $criteria = [
             'id_reg_pd' => $value,
-            'id_smt'    => $id_smt
+            'id_smt' => $id_smt,
         ];
 
         $akm = $this->db->getOne('kuliah_mahasiswa', $criteria);
@@ -103,41 +100,41 @@ class MahasiswaAktifitas extends Resources\Validation
             return true;
         }
 
-        $this->setErrorMessage($field,'Nim ini sudah dimasukkan di smt '.$id_smt );
+        $this->setErrorMessage($field, 'Nim ini sudah dimasukkan di smt ' . $id_smt);
 
         return false;
     }
-
 
     protected function hitungAktifitasMhs($id_reg_pd)
     {
         $criteria = [
             'id_reg_pd' => $id_reg_pd,
-            'id_smt'    => $this->session->getValue('idsmt')
+            'id_smt' => $this->session->getValue('idsmt'),
         ];
 
         $akm = (object) [
-            'h_ips'     => 0,
-            'h_sks_smt' => 0
+            'h_ips' => 0,
+            'h_sks_smt' => 0,
         ];
 
-        if ( $data = $this->db->getOne('hitung_aktifitas_mahasiswa_view', $criteria) )
+        if ($data = $this->db->getOne('hitung_aktifitas_mahasiswa_view', $criteria)) {
             $akm = $data;
+        }
 
         return $akm;
     }
 
     protected function get_values($action)
     {
-        $akm = $this->hitungAktifitasMhs( $action->get_value("id_reg_pd") );
+        $akm = $this->hitungAktifitasMhs($action->get_value("id_reg_pd"));
 
         $this->data = [
-            'id_smt'      => $this->session->getValue('idsmt'),
-            'id_reg_pd'   => $action->get_value("id_reg_pd"),
-            'ips'         => $akm->h_ips,
-            'sks_smt'     => $akm->h_sks_smt,
-            'ipk'         => $action->get_value("ipk"),
-            'sks_total'   => $action->get_value("sks_total"),
+            'id_smt' => $this->session->getValue('idsmt'),
+            'id_reg_pd' => $action->get_value("id_reg_pd"),
+            'ips' => $akm->h_ips,
+            'sks_smt' => $akm->h_sks_smt,
+            'ipk' => $action->get_value("ipk"),
+            'sks_total' => $action->get_value("sks_total"),
             'id_stat_mhs' => $action->get_value("id_stat_mhs"),
         ];
     }
@@ -154,8 +151,8 @@ class MahasiswaAktifitas extends Resources\Validation
                 "ipk",
                 "sks_smt",
                 "sks_total",
-                ],
-            "detail"=>[
+            ],
+            "detail" => [
                 "id_smt",
                 "nipd",
                 "nm_pd",
@@ -165,54 +162,10 @@ class MahasiswaAktifitas extends Resources\Validation
                 "ips",
                 "ipk",
                 "sks_smt",
-                "sks_total"
-                ]
+                "sks_total",
+            ],
         ];
         return implode(",", $fields[$table]);
-    }
-
-    protected function setFilter()
-    {
-        $request = new Resources\Request;
-        $filters = $request->get('filter');
-
-        if ($filters) {
-            $filter = "";
-
-            foreach ($filters as $key => $value) {
-                $filter .= $key . " like '" . $value . "%' AND ";
-            }
-
-            $filter = rtrim($filter, "AND ");
-            $this->conn->filter($filter);
-        }
-        return false;
-    }
-
-    protected function validation($action)
-    {
-
-        if (!$this->validate($this->data)) {
-            $action->invalid();
-            $action->set_response_attribute("details", $this->messages());
-            return false;
-        }
-        return true;
-    }
-
-    protected function messages()
-    {
-        $msg = $this->errorMessages();
-        $text = "";
-
-        if ($msg) {
-            foreach ($msg as $key => $value) {
-                $text .= $key . " : " . $value . ", ";
-            }
-        }
-
-        $text = rtrim($text, ", ");
-        return $text;
     }
 
     public function insert($action)
@@ -246,43 +199,45 @@ class MahasiswaAktifitas extends Resources\Validation
         $action->success();
     }
 
-    public function autoInsertAkm(){
+    public function autoInsertAkm()
+    {
         $criteria = [
-            'id_smt'    => $this->session->getValue('idsmt'),
+            'id_smt' => $this->session->getValue('idsmt'),
             // 'id_reg_pd' => '72506108-2e0b-43cb-82a8-8e2adbaded55',
         ];
-        $akm = $this->db->getAll( 'hitung_aktifitas_mahasiswa_view', $criteria );
+        $akm = $this->db->getAll('hitung_aktifitas_mahasiswa_view', $criteria);
 
-        if (!$akm){
+        if (!$akm) {
             $results['result']['error_desc'] = 'Tidak ada record ' . $this->session->getValue('idsmt');
             return $results;
         }
 
         foreach ($akm as $r) {
             $values = [
-                'id_smt'       => $r->id_smt,
-                'id_reg_pd'    => $r->id_reg_pd,
-                'ips'          => $r->h_ips,
-                'sks_smt'      => $r->h_sks_smt,
+                'id_smt' => $r->id_smt,
+                'id_reg_pd' => $r->id_reg_pd,
+                'ips' => $r->h_ips,
+                'sks_smt' => $r->h_sks_smt,
                 // 'ipk'       => $r->h_ipk,
                 // 'sks_total' => $r->h_sks_total,
-                'id_stat_mhs'  => 'A'
+                'id_stat_mhs' => 'A',
             ];
 
             if (!$this->validate($values)) {
                 $insert = $this->messages();
-            }else{
-                if ( $this->db->insert("kuliah_mahasiswa", $values) )
+            } else {
+                if ($this->db->insert("kuliah_mahasiswa", $values)) {
                     $insert = '-';
+                }
+
             }
 
             $results['result'][] = [
-                'nim'        => $r->nipd,
-                'error_desc' => $insert
+                'nim' => $r->nipd,
+                'error_desc' => $insert,
             ];
         }
         return $results;
     }
-
 
 }

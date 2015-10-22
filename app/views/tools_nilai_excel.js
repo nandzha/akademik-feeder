@@ -8,10 +8,11 @@ define([
 		id:"grd_log",
 		columns:[
 			{id: "kode", width: 100},
-			{id: "nipd", width: 250},
-			{id: "nilai", width: 100},
-			{id: "error_code", width: 120},
-			{id: "error_desc", width: 500},
+			{id: "nipd", width: 150},
+			{id: "nama", width: 250},
+			{id: "nilai", width: 60},
+			{id: "error_code", width: 110},
+			{id: "error_desc", width: 450},
 		],
 		select:"row"
 	};
@@ -48,6 +49,7 @@ define([
 					if(form.validate()){
 						webix.ajax().post("./nilaiexcel/data", values, function(t,res) {
 							var res = res.json();
+							$$("grd_log").clearAll();
 							$$("grd_log").parse(res.result);
 						});
 					}

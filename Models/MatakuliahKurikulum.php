@@ -16,6 +16,9 @@ class MatakuliahKurikulum extends AppResources\Models
     public function init()
     {
         $this->conn->useModel($this);
+        if ($this->session->getValue('desc') != 'ALL') {
+            $this->conn->filter('id_sms', $this->session->getValue('desc'), '=');
+        }
         $this->setFilter();
         $this->conn->dynamic_loading(30);
         $this->conn->render_table("mata_kuliah_kurikulum_smt", "id_mk_kurikulum", $this->setFields());
@@ -64,6 +67,7 @@ class MatakuliahKurikulum extends AppResources\Models
             "sks_sim",
             "smt",
             "a_wajib",
+            "id_sms"
         ];
         return implode(",", $fields);
     }

@@ -18,10 +18,10 @@ class KelasKuliah extends AppResources\Models
         if ($this->session->getValue('desc') != 'ALL') {
             $this->conn->filter('id_sms', $this->session->getValue('desc'), '=');
         }
+        $this->conn->filter('id_smt', $this->session->getValue('idsmt'), '=');
 
         $this->conn->useModel($this);
         $this->setFilter();
-        $this->conn->sort("nm_prodi ASC, id_smt DESC, nm_mk ASC");
         $this->conn->dynamic_loading(30);
         $this->conn->render_table("list_kelas_perkuliahan_view", "id_kls", $this->setFields("list"));
     }
@@ -71,6 +71,7 @@ class KelasKuliah extends AppResources\Models
                 "nm_kls",
                 "sks_mk",
                 "nm_smt",
+                "smt"
             ],
         ];
         return implode(",", $fields[$table]);

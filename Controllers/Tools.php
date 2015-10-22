@@ -64,10 +64,34 @@ class Tools extends AppResources\Controller
     {
         if ($p == 'data') {
             $nilai = new Models\ReadNilai;
-            $data  = $nilai->readExcel();
-            $this->outputJSON($data, 200);
+            $results = $nilai->readExcel();
+            $this->outputJSON($results, 200);
+            return;
         }
         return $this->view->render('tools-nilai-excel.html', $this->data);
+    }
+
+    public function kelaskuliah()
+    {
+        $model = new Models\MahasiswaAktifitas;
+
+        if ($this->request->post('webix_operation') == 'insert') {
+            $results = $model->autoInsertAkm();
+            $this->outputJSON($results, 200);
+            return;
+        }
+
+        return $this->view->render('tools-trakm.html', $this->data);
+    }
+
+    /**
+     * import dari krs fastikom
+     * @return [type] [description]
+     */
+    public function krsmhs(){
+        $krs = new Models\InsertKrs;
+        $data = $krs->readTblKrs();
+        $this->outputJSON($data, 200);
     }
 
 }

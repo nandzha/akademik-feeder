@@ -1,10 +1,10 @@
 {
-  "name": "twig_template",
+  "name": "likefeederdikti",
   "version": "2.0.0",
   "authors": [
     "Baihaqy Aviq <aviq.baihaqy@gmail.com>"
   ],
-  "description": "siakad",
+  "description": "sistem informasi akademik like feeder dikti",
   "componentsDirectory": "plugins/",
   "dependencies": {
     "webix": "~3.0.4",

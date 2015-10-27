@@ -1,6 +1,6 @@
 {
   "name": "webix",
-  "version": "3.0.4",
+  "version": "3.0.8",
   "description": "Javascript components library for mobile and desktop browsers",
   "main": "codebase/webix.js",
   "keywords": [
@@ -16,11 +16,11 @@
   ],
   "license": "GPL",
   "homepage": "http://webix.com",
-  "_release": "3.0.4",
+  "_release": "3.0.8",
   "_resolution": {
     "type": "version",
-    "tag": "3.0.4",
-    "commit": "68e3f645d1f0f8be1bb268a77b3318a0e7efb61a"
+    "tag": "3.0.8",
+    "commit": "06bf2df42a523bd8bf9cf366301ac45924f0d020"
   },
   "_source": "git://github.com/webix-hub/tracker.git",
   "_target": "~3.0.4",

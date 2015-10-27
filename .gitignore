@@ -1,6 +1,6 @@
-/vendor
 /access
 /excel
 /assets/plugins
 /*.sublime-project
+/*.sublime-workspace
 /*.lock

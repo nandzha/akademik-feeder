@@ -2,7 +2,7 @@
 
 return [
 
-    'defaultController' => 'Home',
+    'defaultController' => 'Dashboard',
 
     // Just put null value if you has enable .htaccess file
     'indexFile' => null,

@@ -300,16 +300,16 @@
     border-bottom-color: #7b1fa2;
 }
 .webix_el_radio .webix_custom_radio {
-    display: block;
-    height: 16px;
-    width: 12px;
+    /*display: block;*/
+    /*height: 16px;*/
+    /*width: 12px;*/
     border: 2px solid #878787;
-    border-radius: 50%;
-    background-color: #fff;
+    /*border-radius: 50%;*/
+    /*background-color: #fff;*/
 }
 
 .webix_el_radio .webix_radio_1 .webix_custom_radio:before {
-    content: " ";
+    /*content: " ";
     margin: -3px;
     border-radius: 50%;
     display: block;
@@ -317,23 +317,23 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    height: 6px;
+    height: 6px;*/
     background-color: #7b1fa2;
 }
 .webix_el_radio .webix_radio_1 .webix_custom_radio {
     border: 2px solid #7b1fa2;
-    box-shadow: none;
+    /*box-shadow: none;
     height: 16px;
-    width: 12px;
+    width: 12px;*/
 }
 .webix_custom_checkbox {
-    float: left;
+    /*float: left;
     position: relative;
     top: 50%;
     margin-top: -7px;
     height: 16px;
     width: 12px;
-    border-radius: 2px;
+    border-radius: 2px;*/
     border: 2px solid #878787;
 }
 

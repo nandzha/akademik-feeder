@@ -2,3 +2,5 @@
 /access
 /excel
 /assets/plugins
+/*.sublime-project
+/*.lock

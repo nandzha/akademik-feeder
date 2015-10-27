@@ -5,7 +5,7 @@
     "Baihaqy Aviq <aviq.baihaqy@gmail.com>"
   ],
   "description": "sistem informasi akademik like feeder dikti",
-  "componentsDirectory": "plugins/",
+  "componentsDirectory": "assets/plugins",
   "dependencies": {
     "webix": "~3.0.4",
     "bootstrap-css-only": "~3.3.5",

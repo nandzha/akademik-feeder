@@ -61,4 +61,39 @@ class Sync extends AppResources\Models
     public function getCountRecord($table){
         return $this->db->select('count(*)')->from($table)->getVar();
     }
+
+    public function hitungIPS($id_reg_pd) {
+        $result = $this->db->row("
+        SELECT
+            ROUND((SUM(b.sks_mk * a.nilai_indeks) / SUM(b.sks_mk)), 2) AS ips
+        FROM
+            nilai a
+        INNER JOIN kelas_kuliah b ON a.id_kls = b.id_kls
+        WHERE
+            b.id_sms = b.id_sms
+        AND a.id_reg_pd = '{$id_reg_pd}'
+        GROUP BY
+            a.id_reg_pd,
+            b.id_smt
+        ");
+        return ($result->ips == '')? '2.00' : $result->ips;
+    }
+
+    public function hitungSksSmt($id_reg_pd) {
+        $result = $this->db->row("
+        SELECT
+            SUM(b.sks_mk) AS sks_smt
+        FROM
+            nilai a
+        INNER JOIN kelas_kuliah b ON a.id_kls = b.id_kls
+        WHERE
+            b.id_sms = b.id_sms
+        AND a.id_reg_pd = '{$id_reg_pd}'
+        GROUP BY
+            a.id_reg_pd,
+            b.id_smt
+        ");
+        return ( $result->sks_smt == '')? '10' : $result->sks_smt;
+    }
+
 }

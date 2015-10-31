@@ -68,7 +68,7 @@ class Alias extends Resources\Controller
                         'method' => $args[2],
                     ],
                     'dashboard' => [
-                        'class' => '\\Controllers\Home',
+                        'class' => '\\Controllers\Dashboard',
                         'method' => $args[2],
                     ],
                     'dosen' => [

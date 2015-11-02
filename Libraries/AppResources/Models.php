@@ -12,7 +12,7 @@ class Models extends Resources\Validation
     public function __construct()
     {
         parent::__construct();
-        $this->db = new Resources\Database('pddikti2');
+        $this->db = new Resources\Database;
         $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
         $this->uuid = new Libraries\UUID;
         $this->session = new Resources\Session;

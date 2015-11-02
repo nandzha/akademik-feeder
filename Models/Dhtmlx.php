@@ -10,7 +10,7 @@ class Dhtmlx
     public function __construct()
     {
         Resources\Import::composer();
-        $this->db = new Resources\Database('pddikti');
+        $this->db = new Resources\Database;
         $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
     }
 

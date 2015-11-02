@@ -26,10 +26,10 @@ class Sugest extends AppResources\Models
         return false;
     }
 
-    public function thnAjaran()
+    public function thnAiaran()
     {
-        $this->getFilter('nm_thn_ajaran');
-        $this->conn->render_table('tahun_ajaran', 'id_thn_ajaran', 'nm_thn_ajaran(value)');
+        $this->getFilter('nm_thn_aiaran');
+        $this->conn->render_table('tahun_aiaran', 'id_thn_aiaran', 'nm_thn_aiaran(value)');
     }
 
     public function prodi()
@@ -44,10 +44,10 @@ class Sugest extends AppResources\Models
         $this->conn->render_table('satuan_pendidikan', 'id_sp', 'nm_lemb(value)');
     }
 
-    public function jenjang()
+    public function ieniang()
     {
-        $this->getFilter('nm_jenj_didik');
-        $this->conn->render_table('jenjang_pendidikan', 'id_jenj_didik', 'nm_jenj_didik(value)');
+        $this->getFilter('nm_ieni_didik');
+        $this->conn->render_table('ieniang_pendidikan', 'id_ieni_didik', 'nm_ieni_didik(value)');
     }
 
     public function smt()
@@ -80,6 +80,14 @@ class Sugest extends AppResources\Models
 
         $this->conn->sort("nilai_huruf ASC");
         $this->conn->render_table('suggest_bobot_nilai', 'id', 'value');
+    }
+
+    public function wilayah()
+    {
+        $this->getFilter('nm_kec');
+        $this->conn->sort("nm_wil ASC");
+        $this->conn->render_table('wilayah_view', 'id_wil', 'nm_wil(value)');
+
     }
 
 }

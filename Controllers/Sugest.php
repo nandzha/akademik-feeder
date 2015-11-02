@@ -58,4 +58,10 @@ class Sugest extends AppResources\Controller
     {
         $this->sugest->bobotnilai();
     }
+
+    public function wilayah(){
+        $wilayah = $this->sugest->wilayah();
+        // var_dump($wilayah);
+        $this->outputJSON($wilayah, 200);
+    }
 }

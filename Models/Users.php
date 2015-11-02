@@ -10,7 +10,7 @@ class Users
     public function __construct()
     {
 
-        $this->db = new Resources\Database('pddikti');
+        $this->db = new Resources\Database;
         $this->hash = new Libraries\Passhash;
     }
 

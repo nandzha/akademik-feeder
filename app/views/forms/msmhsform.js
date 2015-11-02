@@ -59,8 +59,12 @@ define(["apps"],function(apps){
 					{
 						id:"alamat",
 						rows: [
-						{view:"text", name: "nik" , label: "NIK", labelWidth:"100"},
-						{view:"text", name: "kewarganegaraan" , label: "Warga", labelWidth:"100"},
+						{
+							cols:[
+								{view:"text", name: "nik" , label: "NIK", labelWidth:"100"},
+								{view:"text", name: "kewarganegaraan" , label: "Warga", labelWidth:"100", value:"ID"},
+							]
+						},
 						{view:"text", name: "jln" , label: "Jalan", labelWidth:"100"},
 						{
 							cols:[
@@ -75,7 +79,15 @@ define(["apps"],function(apps){
 								{view:"text", name: "kode_pos" , label: "Kode POS", labelWidth:"100"},
 							]
 						},
-						{view:"combo", name: "id_wil" , label: "Kecamatan", labelWidth:"100"},
+						{view:"combo", name: "id_wil" , label: "Kecamatan", labelWidth:"100", suggest: {
+							body:{
+						        yCount:5,
+								dataFeed : "/twig_template/sugest/wilayah",
+								template:function(obj){
+									return obj.value;
+							 	},
+						    }
+						}},
 						{
 							cols:[
 								{view:"text", name: "telepon_rumah" , label: "Telepon", labelWidth:"100"},

@@ -21,7 +21,7 @@ define(["apps"],function(apps){
 							{id:"P",value:"Perempuan"}
 						]
 					},
-					{view:"select", name:"id_stat_aktif", label:"Status Aktif", labelWidth:"100", 
+					{view:"select", name:"id_stat_aktif", label:"Status Aktif", labelWidth:"100",
 						options:[
 							{id:"1",  value: "Aktif"},
 							{id:"2",  value: "Tidak Aktif"},
@@ -64,7 +64,7 @@ define(["apps"],function(apps){
 				gravity:2.2,
 				rows:[
 				{
-					borderless:true, view:"tabbar", id:"msmhstab", value: "biodata", multiview:true, 
+					borderless:true, view:"tabbar", id:"msmhstab", value: "biodata", multiview:true,
 					options: [
 						{ value: "Biodata", id: "biodata"},
 						{ value: "Keluarga", id: "keluarga"}
@@ -129,7 +129,7 @@ define(["apps"],function(apps){
 									]},
 									{view:"text", name:"tgl_sk_cpns", label:"Tgl SK CPNS", labelWidth:"100"},
 									{view:"text", name:"tmt_sk_angkat", label:"Tgl SK Pengangkatan", labelWidth:"100"},
-									{view:"select", name:"id_pangkat_gol", label:"Pangkat Gol", labelWidth:"100", 
+									{view:"select", name:"id_pangkat_gol", label:"Pangkat Gol", labelWidth:"100",
 									options:[
 										{id:"1", value:"I/a"},
 										{id:"2", value:"I/b"},
@@ -179,13 +179,22 @@ define(["apps"],function(apps){
 							}
 							]
 						},
+						{view:"combo", name: "id_wil" , label: "Kecamatan", labelWidth:"100", suggest: {
+							body:{
+						        yCount:5,
+								dataFeed : "/twig_template/sugest/wilayah",
+								template:function(obj){
+									return obj.value;
+							 	},
+						    }
+						}},
 						{view:"text", name: "email" , label: "Email", labelWidth:"100"}
 						]
 					},
 					{
 						id:"keluarga",
 						rows:[
-							{view:"select", name:"stat_kawin", label:"Status Pernikahan", labelWidth:"150", 
+							{view:"select", name:"stat_kawin", label:"Status Pernikahan", labelWidth:"150",
 							options:[
 								{id:"0", value: "Belum Menikah"},
 								{id:"1", value: "Sudah Menikah"},
@@ -194,7 +203,7 @@ define(["apps"],function(apps){
 							{view:"text", name:"nm_suami_istri", label:"nama suami/istri", labelWidth:"150"},
 							{view:"text", name:"nip_suami_istri", label:"nip suami/istri", labelWidth:"150"},
 							{view:"text", name:"tmt_pns", label:"TMT PNS", labelWidth:"150"},
-							{view:"select", name:"id_pekerjaan_suami_istri", label:"Pekerjaan", labelWidth:"150", 
+							{view:"select", name:"id_pekerjaan_suami_istri", label:"Pekerjaan", labelWidth:"150",
 							options:[
 								{id:"0", value:"-"},
 								{id:"1", value:"Tidak bekerja"},

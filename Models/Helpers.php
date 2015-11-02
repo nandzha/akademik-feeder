@@ -8,7 +8,7 @@ class Helpers
 {
     public function __construct()
     {
-        $this->db = new Resources\Database('pddikti');
+        $this->db = new Resources\Database;
         $this->conn = new Connector\JSONTreeDataConnector($this->db, "MySQLi");
         $this->session = new Resources\Session;
     }

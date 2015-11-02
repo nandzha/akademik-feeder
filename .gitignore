@@ -4,3 +4,7 @@
 /*.sublime-project
 /*.sublime-workspace
 /*.lock
+/Models/InsertKrs.php
+/Models/ReadNilai.php
+/Controllers/Sync.php
+/Controllers/Ws.php

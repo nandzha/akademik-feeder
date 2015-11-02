@@ -15,7 +15,7 @@ class Event extends Resources\Validation
     public function __construct()
     {
         parent::__construct();
-        $this->db = new Resources\Database('pddikti');
+        $this->db = new Resources\Database;
         $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
         // $this->val     = new Validation($this->setRules());
     }

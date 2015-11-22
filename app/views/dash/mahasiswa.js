@@ -1,29 +1,24 @@
 define(function(){
 
-	var header = {
-		"template": "<span class='webix_icon fa-line-chart'></span>Revenue", "css": "sub_title", "height": 50
-	};
-
 	var chart = {
 		view: "chart",
 		type: "line",
 		xAxis:{
-			template: "#month#"
+			template: "#tahun#"
 		},
 		tooltip: {
-			template: "#number#M $"
+			template: "#value# MHS"
 		},
 		minHeight:140,
 		yAxis:{
 			"start":0,
-			"end": 450,
-			"step": 150
+			"end": 500,
+			"step": 100
 		},
 		offset: false,
 		series:[
 			{
-				"value": "#number#",
-
+				"value": "#value#",
 
 				"item":{
 					"borderColor": "#fff",
@@ -40,11 +35,11 @@ define(function(){
 			"top": 25
 		},
 		data:[
-			{"id": 1, "month": "Jun", "number": 90},
-			{"id": 2, "month": "Jul", "number": 220},
-			{"id": 3, "month": "Aug", "number": 180},
-			{"id": 4, "month": "Sep", "number": 405},
-			{"id": 5, "month": "Oct", "number": 275}
+			{"id": 1, "tahun": "2011", "value": 90},
+			{"id": 2, "tahun": "2012", "value": 220},
+			{"id": 3, "tahun": "2013", "value": 180},
+			{"id": 4, "tahun": "2014", "value": 405},
+			{"id": 5, "tahun": "2015", "value": 275}
 		]
 	};
 
@@ -53,7 +48,6 @@ define(function(){
 		css:"donut_result",
 		type: "donut",
 		shadow: false,
-		color: "#color#",
 		pieInnerText: function(obj){
 			return obj.result?"<div class='donut_result'>"+obj.value+"</div>":"";
 		},
@@ -64,8 +58,12 @@ define(function(){
 			bottom:10
 		},
 		data:[
-			{value: 30, color: "#61b5ee",result:1},
-			{value: 70, color: "#eee"}
+			{value: 30, result:1},
+			{value: 0, },
+			{value: 7, },
+			{value: 4, },
+			{value: 3, },
+			{value: 6, },
 		]
 	};
 
@@ -111,12 +109,15 @@ define(function(){
 		]
 	};
 
-	return  {	
+	return  {
 		type: "clean",
 		rows:[
+			{
+				"template": "<span class='webix_icon fa-bar-chart'></span>Profile Mahasiswa", "css": "sub_title", "height": 35
+			},
 			chart,
 			{
-				height: 90,
+				height: 150,
 				type: "clean",
 				cols:[
 					donut1,
@@ -130,13 +131,13 @@ define(function(){
 				css: "donut_titles",
 				cols:[
 					{
-						template: "Europe"
+						template: "Kec se-Kab.Wonosobo"
 					},
 					{
-						template: "Asia"
+						template: "Kab / Kota"
 					},
 					{
-						template: "Northern America"
+						template: "Propinsi"
 					}
 				]
 			}

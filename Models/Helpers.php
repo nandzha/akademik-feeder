@@ -187,8 +187,8 @@ class Helpers
             foreach ($result as $r) {
                 $rules[$r->name] = [
                     'rules'  => $this->toArray($r->rules),
-                    'label'  => $r->label,
-                    'filter' => $this->toArray($r->filter)
+                    // 'label'  => $r->label,
+                    // 'filter' => $this->toArray($r->filter)
                 ];
             }
             return $rules;

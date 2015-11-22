@@ -1,8 +1,9 @@
 define([
 	"apps",
 	"views/modules/mhs_search",
-    "views/modules/dataProcessing"
-], function(apps,search, handleProcessing){
+    "views/modules/dataProcessing",
+    "views/modules/dataProgressBar",
+], function(apps,search, handleProcessing, notifidata){
 
 var grd_riwpend = {
 	view:"datatable",
@@ -16,6 +17,8 @@ var grd_riwpend = {
 	],
 	select:"row", editable:true, editaction:"dblclick",
 	dataFeed : "./riwpend/data",
+    ready: notifidata.emptydata,
+    on: notifidata.progressbar
 };
 
 var btn_add ={

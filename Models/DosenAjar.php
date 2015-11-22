@@ -75,18 +75,6 @@ class DosenAjar extends AppResources\Models
         ", "a.id_ajar", $this->setFields("kls_kuliah_dosen"));
     }
 
-    public function setRules()
-    {
-        return [
-            'id_reg_ptk' => [
-                'rules' => ['required'],
-            ],
-            'id_kls' => [
-                'rules' => ['required'],
-            ],
-        ];
-    }
-
     protected function get_values($action)
     {
         $this->data = [

@@ -2,7 +2,8 @@ define([
 	"apps",
 	"views/forms/msmhsform",
 	"views/modules/dataProcessing",
-],function(apps, forms, handleProcessing){
+	"views/modules/dataProgressBar",
+],function(apps, forms, handleProcessing, notifidata){
 
 var grd_mahasiswa = {
 	view:"datatable",
@@ -16,7 +17,10 @@ var grd_mahasiswa = {
 		{ id: "nm_stat_mhs", width:200, header: "nm_stat_mhs"}
 	],
 	select:"row",
-	url: "./mahasiswa/lst"
+	url: "./mahasiswa/lst",
+	ready: notifidata.emptydata,
+	on: notifidata.progressbar
+
 };
 
 var btn_save ={

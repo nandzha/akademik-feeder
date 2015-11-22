@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Kartu Rencana Studi</title>
+</head>
+
+<body>
+	<table width="660" border="0">
+		<tr>
+			<td width="92"  align="right"><img src="/assets/imgs/LogoKRS.png" width="92" height="87" /></td>
+			<td width="470"  align="center">
+				<font "Times New Roman, Times, serif" size="+1"> 
+					<strong> UNIVERSITAS SAINS AL-QUR'AN (UNSIQ) <br />
+						JAWA TENGAH DI WONOSOBO<br />
+						FAK-TEKNIK &amp; ILMU KOMPUTER 
+					</strong>
+				</font>
+			</td>
+			<td width="84">&nbsp;</td>
+		</tr>
+		<tr>
+			<td >&nbsp;</td>
+			<td  align="center"><strong><u> KARTU RENCANA STUDI (KRS)</u></strong></td>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			<td width="77"><font face="Times New Roman, Times, serif"> NIM</font></td>
+			<td width="287"><font face="Times New Roman, Times, serif">: {{ mhs.NIMHSMSMHS }} </font></td>
+			<td width="88"><font face="Times New Roman, Times, serif">Prodi/Jenjang</font></td>
+			<td width="190"><font face="Times New Roman, Times, serif">: {{ mhs.NMPSTMSPST }} / {{ mhs.JENJANG }} </font></td>
+		</tr>
+		<tr>
+			<td><font face="Times New Roman, Times, serif">Nama</font></td>
+			<td><font face="Times New Roman, Times, serif">: {{ mhs.nm_pd }} </font></td>
+			<td><font face="Times New Roman, Times, serif">TA/Smt</font></td>
+			<td><font face="Times New Roman, Times, serif">: {{ mhs.TAHUNMSMHS }} / {{ smt }} </font></td>
+		</tr>
+	</table>
+
+	<table width="659" border="1" cellpadding="2" cellspacing="0" bordercolor="#111111" style="border-collapse: collapse">
+		<tr>
+			<td width="22"><font face="Times New Roman, Times, serif">No</font></td>
+			<td width="69"><font face="Times New Roman, Times, serif">Kode MK</font></td>
+			<td width="256"><font face="Times New Roman, Times, serif">Nama Matakuliah</font></td>
+			<td width="30"><font face="Times New Roman, Times, serif">SKS</font></td>
+			<td width="24"><font face="Times New Roman, Times, serif">Smt</font></td>
+			<td width="191"><font face="Times New Roman, Times, serif">Nama Dosen</font></td>
+			<td width="23"><font face="Times New Roman, Times, serif">Kls</font></td>
+		</tr>
+		{% for r in krs %}
+		<tr>
+			<td width="22" align="right"><font face="Times New Roman, Times, serif" size="-1"> {{ loop.index }} </font></td>
+			<td width="69" align="left"><font face="Times New Roman, Times, serif" size="-1"> {{ r.KDKMKTRNLMHER }} </font></td>
+			<td width="256" align="left"><font face="Times New Roman, Times, serif" size="-1"> {{ r.NAKMKTBKMK }} </font></td>
+			<td width="30" align="center"><font face="Times New Roman, Times, serif" size="-1"> {{ r.SKSMKTBKMK }} </font></td>
+			<td width="24" align="center"><font face="Times New Roman, Times, serif" size="-1"> {{ r.SEMESTBKMK }} </font></td>
+			<td width="191" align="left"><font face="Times New Roman, Times, serif" size="-1"> {{ r.NMDOSTBDOS }}, {{ r.GELARTBDOS }} </font></td>
+			<td width="23" align="center"><font face="Times New Roman, Times, serif" size="-1"> {{ r.KELASTRNLMHER }} </font></td>
+		</tr>  
+		{% endfor %}
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td align="center"><font face="Times New Roman, Times, serif"><strong>Total SKS Diambil</strong></font></td>
+			<td align="center"><font face="Times New Roman, Times, serif"><strong> {{ sumSKS }} </strong></font></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>   
+	</table>
+	*)Mata Kuliah Her (Perbaikan Nilai C)<br />
+
+	<table width="659" border="0">
+		<tr>
+			<td width="168" rowspan="5" align="left" valign="top"> Photoss </td>
+			<td width="227">&nbsp;</td>
+			<td width="250"><font face="Times New Roman, Times, serif">Wonosobo, {{ "now"|localizeddate('long', 'none', 'ID') }} </font></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><font face="Times New Roman, Times, serif">Ketua Program Studi</font></td>
+		</tr>
+		<tr>
+			<td height="35">&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><font face="Times New Roman, Times, serif"> {{ mhs.NMDOSTBDOS }}, {{ mhs.GELARTBDOS }} </font></td>
+		</tr>
+	</table>
+
+</body>
+</html>

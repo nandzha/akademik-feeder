@@ -1,8 +1,9 @@
 define([
 	"apps",
 	"views/modules/mhs_search",
-    "views/modules/dataProcessing"
-], function(apps,search, handleProcessing){
+    "views/modules/dataProcessing",
+    "views/modules/dataProgressBar",
+], function(apps,search, handleProcessing,notifidata){
 
 var grd_aktifitas = {
 	view:"datatable",
@@ -26,7 +27,9 @@ var grd_aktifitas = {
 	],
 	select:"row", editable:true, editaction:"dblclick",
 	datafetch:30,
-	dataFeed : "./kuliahaktifitas/data"
+	dataFeed : "./kuliahaktifitas/data",
+    ready: notifidata.emptydata,
+    on: notifidata.progressbar
 };
 
 var btn_add ={

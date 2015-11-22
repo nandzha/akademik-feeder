@@ -1,8 +1,9 @@
 define([
 	"apps",
 	"views/modules/mhs_search",
-    "views/modules/dataProcessing"
-], function(apps,search, handleProcessing){
+    "views/modules/dataProcessing",
+    "views/modules/dataProgressBar",
+], function(apps,search, handleProcessing, notifidata){
 
 function ruleRegTA(obj, common, value){
     if (obj.SMTMHS < 8)
@@ -42,18 +43,19 @@ var grd_reg_mhs = {
 	id:"grd_reg_mhs",
 	columns:[
     { id:"id_smt"},
-    { id:"SMTMHS"},
-    { id:"NIMHS"},
-    { id:"REGSMS",  checkValue:'1', uncheckValue:'0', template:"{common.checkbox()}"},
-    { id:"REGTA",   checkValue:'1', uncheckValue:'0', template: ruleRegTA },
-    { id:"REGKP",   checkValue:'1', uncheckValue:'0', template: ruleRegKP },
-    { id:"REGKKL",  checkValue:'1', uncheckValue:'0', template: ruleRegKKL },
-    { id:"REGHER",  checkValue:'1', uncheckValue:'0', template:"{common.checkbox()}"},
-    { id:"MAXKRS", editor:"text"},
-    { id:"MAXKRSHER", editor:"text"},
+    { id:"smtmhs"},
+    { id:"regsmt",  checkValue:'1', uncheckValue:'0', template:"{common.checkbox()}"},
+    { id:"regta",   checkValue:'1', uncheckValue:'0', template: ruleRegTA },
+    { id:"regkp",   checkValue:'1', uncheckValue:'0', template: ruleRegKP },
+    { id:"regkkl",  checkValue:'1', uncheckValue:'0', template: ruleRegKKL },
+    { id:"regher",  checkValue:'1', uncheckValue:'0', template:"{common.checkbox()}"},
+    { id:"maxkrs", editor:"text"},
+    { id:"maxkrsher", editor:"text"},
     ],
 	select:"row", editable:true, editaction:"dblclick",
 	dataFeed : "./registrasi/data",
+    ready: notifidata.emptydata,
+    on: notifidata.progressbar
 };
 
 var btn_add ={
@@ -106,7 +108,7 @@ return {
     	apps.webix();
     },
     onInit: function(){
-        $$("grd_reg_mhs").bind( $$("listmsmhs"), "c.id_reg_pd");
+        $$("grd_reg_mhs").bind( $$("listmsmhs"), "id_reg_pd");
 
         var dp = new webix.DataProcessor({
             updateFromResponse:true,

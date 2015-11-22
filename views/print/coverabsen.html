@@ -1,0 +1,240 @@
+<head>
+    <title>Cover Absen</title>
+    <style type='text/css'>
+        @media print {
+            @page {
+              size: 21cm 33cm;  /* width height */
+            }
+            .pagestart {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+
+{% for r in absen %}
+<div class='pagestart'>
+    <table width="686" border="0">
+        <tr>
+            <td colspan="2" align="right"><img src="/assets/imgs/LogoKRS.png" width="106" height="100" /></td>
+            <td width="575" colspan="5" align="center">
+                <font size="+2" face="Times New Roman, Times, serif">
+                    <strong>
+                        UNIVERSITAS SAINS AL-QUR'AN (UNSIQ) <br />
+                        JAWA TENGAH DI WONOSOBO<br />
+                        FAKULTAS TEKNIK DAN ILMU KOMPUTER
+                    </strong>
+                </font>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="5" align="center"><font face="Arial, Helvetica, sans-serif" size="-2">Program Studi :Teknik Sipil, Teknik Arsitektur, Teknik Informatika, Manajemen Informatika, Teknik Mesin, Teknik Elektro</font></td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="5" align="center">
+                <table width="564" border="1" cellpadding="2" cellspacing="0" bordercolor="#111111" style="border-collapse: collapse">
+                    <tr>
+                        <td width="549" align="center">
+                            <font face="Arial, Helvetica, sans-serif" size="-2">Jl. Raya Kalibeber Km. 03 Wonosobo 56351 | Telp (0286) 3326102 | Fax. (0286) 3326103 | http://fastikom-unsiq.ac.id</font>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="5" align="center">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="5" align="center"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>DAFTAR MATERI AJAR SEMESTER<br />
+                FAKULTAS TEKNIK DAN ILMU KOMPUTER UNIVERSITAS SAINS AL-QUR'AN<br />
+                TAHUN AKADEMIK {{r.nm_smt}} </strong></font>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td width="40">&nbsp;</td>
+            <td width="131"><font face="Arial, Helvetica, sans-serif"><strong>NAMA DOSEN</strong></font></td>
+            <td width="503"><font face="Arial, Helvetica, sans-serif"><strong>: {{ r.nm_ptk }}, {{ r.GELARTBDOS }} </strong></font></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><font face="Arial, Helvetica, sans-serif"><strong>MATA KULIAH</strong></font></td>
+            <td><font face="Arial, Helvetica, sans-serif"><strong>: {{ r.nm_mk }} (Kelas {{ r.nm_kls }}) </strong></font></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td height="21"><font face="Arial, Helvetica, sans-serif"><strong>PRODI/SMT</strong></font></td>
+            <td><font face="Arial, Helvetica, sans-serif"><strong>: {{ r.nm_prodi }} / {{ r.smt }} </strong></font></td>
+        </tr>
+    </table>
+
+    <table width="634" border="1" cellpadding="2" cellspacing="0" bordercolor="#111111" style="border-collapse: collapse; margin-left:40px">
+        <tr>
+            <td width="29" align="center"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>PER</strong></font></td>
+            <td width="292" align="center"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>POKOK BAHASAN</strong></font></td>
+            <td width="101" align="center"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>TANGGAL</strong></font></td>
+            <td width="61" align="center"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>JM. MHS</strong></font></td>
+            <td width="118" align="center"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>TANDA TANGAN</strong></font></td>
+        </tr>
+        <tr>
+            <td  align="center"><strong>I</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>II</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>III</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>IV</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>V</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>VI</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>VII</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>VIII</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>IX</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>X</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>XI</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>XII</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="center"><strong>XIII</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td height="44" align="center"><strong>XIV</strong></td>
+            <td>
+                &nbsp;<br>
+                &nbsp;
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+    <table width="678" border="0">
+        <tr>
+            <td width="41">&nbsp;</td>
+            <td width="320" valign="top"><font size=2 font face="Arial, Helvetica, sans-serif"><strong>NB:<br /> Mohon diisi setiap kali pertemuan</strong></font></td>
+            <td width="303" align="center"><font size=2 font face="Arial, Helvetica, sans-serif"><strong>PENGAMPU,<br /><br /><br /><br /><br /><u> {{ r.nm_ptk }}</strong></></font></td>
+        </tr>
+    </table>
+</div>
+{% endfor %}

@@ -1,0 +1,127 @@
+<title>Daftar Nilai</title>
+<table width="744" border="0">
+	<tr>
+		<td width="738" height="46" align="center">
+			<font face="Times New Roman, Times, serif" size="+2">
+				<strong>UNIVERSITAS SAINS AL-QUR'AN (UNSIQ)<br>
+					FAKULTAS TEKNIK DAN ILMU KOMPUTER
+				</strong>
+			</font><br />
+			<strong>KARTU HASIL STUDI SEMESTER {{nilai[0].semester}} </strong><hr>
+		</td>
+		</tr>
+</table>
+
+<table width="742" border="0">
+	<tr>
+		<td width="66">Nim</td>
+		<td width="380">: {{ nilai[0].nipd }} </td>
+		<td width="45">Jurusan</td>
+		<td width="234">: {{ nilai[0].nm_prodi }} </td>
+	</tr>
+	<tr>
+		<td>Nama</td>
+		<td>: {{ nilai[0].nm_pd }} </td>
+		<td>Jenjang</td>
+		<td>: {{ nilai[0].nm_jenj_didik }} </td>
+	</tr>
+</table>
+
+<table width="750" border="0">
+	<tr>
+		<td colspan="4" valign="top">
+			<table width="742" border="1" cellpadding="1" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+				<tr>
+					<td width="21" align="center" bgcolor="#CCCCCC"><font size="-2"><strong>NO</strong></font></td>
+					<td width="52" align="center"bgcolor="#CCCCCC"><font size="-2" ><strong>KODE</strong></font></td>
+					<td width="202" align="center"bgcolor="#CCCCCC"><font size="-2"><strong>MATA KULIAH</strong></font></td>
+					<td width="26" align="center"bgcolor="#CCCCCC"><font size="-2"><strong>SKS</strong></font></td>
+					<td width="35" align="center"bgcolor="#CCCCCC"><font size="-2"><strong>NILAI</strong></font></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+{% set smtsem = 0 %}
+
+{% for r in nilai %}
+
+	{% if ( smtsem != r.semester) %}
+
+<table width="750" border="0">
+	<tr>
+		<td valign="top" role="left">
+			<table width="742" border="1" cellpadding="1" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+				<tr>
+					<td colspan="5">
+						<strong><font size="-1">Semester {{r.semester}} </font></strong>
+					</td>
+				</tr>
+	{% endif %}
+	{% set smtsem = r.semester %}
+				<tr>
+					<td width="21" align="center" style="border-bottom:none"><font size="-2"> {{ loop.index }} </font></td>
+					<td width="52"><font size="-2"> {{ r.kode_mk }} </font></td>
+					<td width="202"><font size="-2"> {{ r.nm_mk }} </font></td>
+					<td width="26" align="center"><font size="-2"> {{ r.sks_mk }} </font></td>
+					<td width="35" align="center"><font size="-2"> {{ r.nilai_huruf}}({{r.nilai_indeks}}) </font></td>
+				</tr>
+	{% if (nilai[loop.index0 + 1].semester != smtsem) %}
+
+
+			</table>
+		</td>
+	</tr>
+</table>
+	{% endif %}
+
+{% endfor %}
+
+
+<table width="750" border="0">
+	<tr>
+		<td colspan="4" valign="top">
+			<table width="368" border="1" cellpadding="1" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+				<tr>
+					<td width="275" align="center" bgcolor="#CCCCCC"><font size="-2"><strong>JUMLAH SKS</strong></font></td>
+					<td width="61" align="center"bgcolor="#CCCCCC"><font size="-2"><strong> {{ sumSKS }} </strong></font></td>
+				</tr>
+				<tr>
+					<td width="275" align="center" bgcolor="#CCCCCC"><font size="-2"><strong>SKS TEMPUH</strong></font></td>
+					<td width="61" align="center"bgcolor="#CCCCCC"><font size="-2"><strong> {{ sumSKSTempuh }} </strong></font></td>
+				</tr>
+			</table>
+		</td>
+		<td colspan="4" valign="top">
+			<table width="368" border="1" cellpadding="1" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+				<tr>
+					<td width="275" align="center" bgcolor="#CCCCCC"><font size="-2"><strong>SKS LULUS</strong></font></td>
+					<td width="61" align="center" bgcolor="#CCCCCC"><font size="-2"><strong> {{ sumSKSLulus }} </strong></font></td>
+					</tr>
+					<tr>
+						<td align="center" bgcolor="#CCCCCC"><font size="-2"><strong>INDEKS PRESTASI KUMULATIF (IPK)</strong></font></td>
+						<td align="center" bgcolor="#CCCCCC"><font size="-2"><strong> {{ sumIPK }} </strong></font>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br />
+<table width="705" border="0">
+	<tr>
+		<td width="62">&nbsp;</td>
+		<td width="410">&nbsp;</td>
+		<td width="219"><font size="-1">Wonosobo, indonesian_date()</font></td>
+	</tr>
+	<tr>
+		<td height="69">&nbsp;</td>
+		<td>&nbsp;</td>
+		<td valign="top"><font size="-1">Dekan,</font><br /> <br /><br />
+			<strong><font size="-1"><u> WIJI LESTARINI, ST, MT</u></font> </strong><br />
+			NPU. 1940902074
+		</td>
+	</tr>
+</table>

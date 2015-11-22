@@ -8,3 +8,4 @@
 /Models/ReadNilai.php
 /Controllers/Sync.php
 /Controllers/Ws.php
+/config/database.php

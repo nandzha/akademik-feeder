@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block pageWrapper %}
+	<div id="title"  style='display:none;'>
+		<div class='header'>
+			Pengumuman
+		</div>
+	</div>
+
+	<div id="issue_record" class='template' style='display:none;'>
+		<div style='float:left; line-height:100px; width:50px; text-align:center;'>#id#</div>
+		<div><b>#title#</b> <span> #date#</span></div>
+		<div>#desc# </div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script type="text/javascript">
+	    require(["views/mhs/notice"], function(ux){
+	    	ux.ui();
+	    	ux.onInit();
+	    });
+	</script>
+{% endblock %}

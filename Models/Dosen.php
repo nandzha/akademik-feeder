@@ -28,17 +28,6 @@ class Dosen extends AppResources\Models
         $this->conn->render_table("dosen_detail_view", "id_ptk", $this->setFields("detail"));
     }
 
-    public function setRules()
-    {
-        return [
-            'nm_ptk' => [
-                'rules' => ['required', 'min' => 3],
-                'label' => 'Nama Dosen',
-                'filter' => ['trim', 'strtoupper', 'ucwords'],
-            ],
-        ];
-    }
-
     protected function setFields($table)
     {
         $fields = [

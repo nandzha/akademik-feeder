@@ -46,17 +46,6 @@ class MahasiswaPt extends AppResources\Models
         ", "id_pd", $this->setFields());
     }
 
-    public function setRules()
-    {
-        return [
-            'event_name' => [
-                'rules' => ['required', 'min' => 3, 'callback' => 'eventNameIsExist'],
-                'label' => 'Nama Event',
-                'filter' => ['trim', 'strtolower', 'ucwords'],
-            ],
-        ];
-    }
-
     protected function setFields()
     {
         $fields = [

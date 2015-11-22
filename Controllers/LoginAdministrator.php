@@ -6,8 +6,11 @@ use Libraries\AppResources;
 use Models;
 use Resources;
 
-class Login extends AppResources\Controller
+class LoginAdministrator extends AppResources\Controller
 {
+    protected $ruleType = 'signin';
+    protected $pagesUrl = 'admin/';
+
     public function __construct()
     {
         parent::__construct();
@@ -40,16 +43,19 @@ class Login extends AppResources\Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $ruleType = 'signin';
-
-            if (!$next = $this->loginValidation->validateValues($ruleType)) {
+            if (!$next = $this->loginValidation->validateValues($this->ruleType)) {
                 $data['signature'] = $this->requestSignature->generate();
             } else {
-                $this->redirect('admin/' . $next);
+                $this->redirect($this->pagesUrl . $next);
             }
         }
 
         return $this->view->render('admin-login.html', $data);
+    }
+
+    public function setConfig($ruleType, $pagesUrl){
+        $this->ruleType = $ruleType;
+        $this->pagesUrl = $pagesUrl;
     }
 
     private function isAccessGranted($module)
@@ -81,6 +87,6 @@ class Login extends AppResources\Controller
     public function signout()
     {
         $this->session->destroy();
-        $this->redirect('login');
+        $this->redirect('admin');
     }
 }

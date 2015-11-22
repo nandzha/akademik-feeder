@@ -25,6 +25,13 @@ class Sync extends AppResources\Models
         return $this->db->insert($table, $data);
     }
 
+     public function insertTableRecursif($table, $data){
+        foreach ($data as $row) {
+            $data = $this->db->insert($table, $row);
+        }
+        return $data;
+    }
+
     public function getTempTable($table){
         return $this->db->getAll( $table );
     }
@@ -95,5 +102,16 @@ class Sync extends AppResources\Models
         ");
         return ( $result->sks_smt == '')? '10' : $result->sks_smt;
     }
+
+    public function getPropertyMhsByNim($criteria)
+    {
+        $data = $this->db->getOne('mahasiswa_list_view', $criteria);
+        if ($data) {
+            return $data;
+        }
+
+        return false;
+    }
+
 
 }

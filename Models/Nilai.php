@@ -36,6 +36,7 @@ class Nilai extends AppResources\Models
         $this->conn->useModel($this);
         $this->setFilter();
         $this->conn->sort("id_smt DESC");
+        $this->conn->sort("semester DESC");
         $this->conn->dynamic_loading(30);
         $this->conn->render_sql("
         SELECT
@@ -53,7 +54,8 @@ class Nilai extends AppResources\Models
             a.nilai_indeks,
             b.nm_prodi,
             b.kode_prodi,
-            b.nm_kls
+            b.nm_kls,
+            get_semester(b.id_smt, c.mulai_smt) AS semester
         FROM
             nilai a
         JOIN (
@@ -74,8 +76,17 @@ class Nilai extends AppResources\Models
             JOIN semester cc ON aa.id_smt = cc.id_smt
             JOIN sms dd ON aa.id_sms = dd.id_sms
         ) b ON a.id_kls = b.id_kls
+        JOIN (
+            SELECT
+                bb.nipd,
+                aa.nm_pd,
+                bb.id_reg_pd,
+                SUBSTR(bb.mulai_smt,1,4) AS mulai_smt
+            FROM
+                mahasiswa aa
+            JOIN mahasiswa_pt bb ON aa.id_pd = bb.id_pd
+        ) c ON c.id_reg_pd = a.id_reg_pd
         ", "id_nilai", $this->setFields("mhs_nilai"));
-
     }
 
     public function mhsKrs()
@@ -217,11 +228,14 @@ class Nilai extends AppResources\Models
             ],
             "mhs_nilai" => [
                 "id_smt",
+                "semester",
                 "kode_mk",
                 "nm_mk",
                 "nm_kls",
                 "sks_mk",
+                "nilai_angka",
                 "nilai_huruf",
+                "nilai_indeks"
             ],
             "mhs_krs" => [
                 "nipd",

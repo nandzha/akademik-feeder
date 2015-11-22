@@ -54,7 +54,6 @@ class PhpExcel {
 		}
 		if ($data = $namedDataArray)
 			return $data;
-
 		return false;
 	}
 

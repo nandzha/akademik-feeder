@@ -53,7 +53,6 @@ define(['menuTree'], function(){
         css :  "menu",
         activeTitle :  true,
         select :  true,
-        gravity : 0.2,
         url:"/twig_template/api/menu",
         ready : function(){
             var state = restore_state();
@@ -122,6 +121,18 @@ define(['menuTree'], function(){
 
     };
 
+    function show_progress_bar(delay, position){
+        $$("mainContent").disable();
+        $$("mainContent").showProgress({
+            type: position,
+            delay:delay,
+            hide:true
+        });
+        setTimeout(function(){
+            $$("mainContent").enable();
+        }, delay);
+    }
+
     return {
         setUiScheme :  ui_scheme,
         setUiWindow :  ui_window,
@@ -139,7 +150,7 @@ define(['menuTree'], function(){
                     view : "accordion",
                     type : "line",
                     cols : [
-                        { css : "sidebar", header : "Menu", body : menu, width : 200},
+                        { css : "sidebar", header : "Menu", body : menu,  gravity : 0.22,},
                         {
                             id : "rowContent",
                             rows : [
@@ -167,6 +178,8 @@ define(['menuTree'], function(){
 
             webix.i18n.parseFormatDate = webix.Date.strToDate("%d %m %Y");
             webix.debug = true;
+            webix.extend($$("mainContent"), webix.ProgressBar);
+            // show_progress_bar(2000, "top");
         },
 
     };

@@ -16,6 +16,24 @@ class Models extends Resources\Validation
         $this->conn = new Connector\JSONDataConnector($this->db, "MySQLi");
         $this->uuid = new Libraries\UUID;
         $this->session = new Resources\Session;
+        $this->request = new Resources\Request;
+        $this->setRuleErrorMessages(
+            [
+                'required' => '%label% tidak boleh kosong',
+                'email' => '%label% harus berformat email',
+                'min' => '%label% jumlah karakter yang diberikan minimal berjumlah %size%',
+                'max' => '%label% jumlah karakter yang diberikan maksimal berjumlah %size%',
+                'compare' => '%label% value did not match compare to %comparatorLabel%',
+                'file' => '%label% tidak boleh kosong',
+                'regex' => '%label% format input tidak valid',
+                'in' => '%label% did not match to any specified values',
+                'url' => '%label% URL tidak valid',
+                'alpha' => '%label% harus berupa karakter alphabet',
+                'numeric' => '%label% harus berupa karakter numerik',
+                'alphanumeric' => '%label% harus berupa karakter alphabet atau numerik',
+                'match' => '%label% length must exactly %size% character',
+            ]
+        );
     }
 
     public function setRules()
@@ -31,25 +49,31 @@ class Models extends Resources\Validation
 
         if ($result = $this->db->getAll()) {
             foreach ($result as $r) {
-                $rules[$r->name] = [
-                    'rules'  => $this->toArray($r->rules),
-                    'label'  => $r->label,
-                    'filter' => $this->toArray($r->filter)
-                ];
+                $rules[$r->name]['rules'] = $this->toArray($r->rules);
+
+                if ($r->label != '') {
+                    $rules[$r->name]['label'] = $r->label;
+                }
+
+                if ($r->filter != '') {
+                    $rules[$r->name]['filter'] = $this->toArray($r->filter);
+                }
+
             }
             return $rules;
         }
         return false;
     }
 
-    private function toArray($string){
+    private function toArray($string)
+    {
         $partial = explode(',', $string);
-        $final   = array();
-        array_walk($partial, function($val, $key) use(&$final){
+        $final = array();
+        array_walk($partial, function ($val, $key) use (&$final) {
             $subArray = explode('=>', $val);
-            if ( count($subArray) == 1 )
+            if (count($subArray) == 1) {
                 $final[$key] = $val;
-            else{
+            } else {
                 list($key, $value) = $subArray;
                 $final[$key] = $value;
             }
@@ -57,10 +81,10 @@ class Models extends Resources\Validation
         return $final;
     }
 
-    protected function setFilter()
+    protected function setFilter($filter=false)
     {
-        $request = new Resources\Request;
-        $filters = $request->get('filter');
+
+        $filters = $this->request->get('filter');
 
         if ($filters) {
             $filter = "";
@@ -70,6 +94,8 @@ class Models extends Resources\Validation
 
             $filter = rtrim($filter, "AND ");
 
+            $this->conn->filter($filter);
+        }else{
             $this->conn->filter($filter);
         }
 

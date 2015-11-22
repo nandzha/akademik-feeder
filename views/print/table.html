@@ -1,0 +1,62 @@
+
+
+{% set smtsem   = 0 %}
+{% set smtArray = [] %}
+{% set i = 0 %}
+
+{% for r in nilai %}
+	{% set smtArray = smtArray|merge([r.SEMESTBKMK ]) %}
+
+	{% if (r.SEMESTBKMK == '01' or r.SEMESTBKMK == '03' or r.SEMESTBKMK == '05' or r.SEMESTBKMK == '07') and (smtsem != r.SEMESTBKMK) %}
+
+<table width="750" border="0">
+	<tr>
+		<td valign="top" role="left">
+			<table width="368" border="1" cellpadding="1" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">  
+				<tr>
+					<td colspan="5">
+						<strong><font size="-1">Semester {{r.SEMESTBKMK}} </font></strong>
+					</td>
+				</tr>
+
+	{% elseif (r.SEMESTBKMK == '02' or r.SEMESTBKMK == '04' or r.SEMESTBKMK == '06' or r.SEMESTBKMK == '08') and (smtsem != r.SEMESTBKMK) %}
+			<td valign="top" role="right">
+				<table width="368" border="1" cellpadding="1" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">	
+					<tr>
+						<td colspan="5">
+							<strong><font size="-1"> Semester {{r.SEMESTBKMK}} </font></strong>
+						</td>
+					</tr>  
+	{% endif %}
+	{% set smtsem = r.SEMESTBKMK %}  
+
+				<tr>
+					<td width="21" align="center" style="border-bottom:none"><font size="-2"> {{ loop.index }} </font></td>
+					<td width="52"><font size="-2"> {{ r.KDKMKTRNLM }} - {{r.SEMESTBKMK}} </font></td>
+					<td width="202"><font size="-2"> {{ r.NAKMKTBKMK }} </font></td>
+					<td width="26" align="center"><font size="-2"> {{ r.SKSMKTBKMK }} </font></td>
+					<td width="35" align="center"><font size="-2"> {{ r.NLAKHTRNLM }} </font></td>
+				</tr>
+
+	{# {{ nilai[loop.index0 + 1].SEMESTBKMK }} #}
+
+	{% if (nilai[loop.index0 + 1].SEMESTBKMK == '02' or nilai[loop.index0 + 1].SEMESTBKMK == '04' or nilai[loop.index0 + 1].SEMESTBKMK == '06' or nilai[loop.index0 + 1].SEMESTBKMK == '08') and (nilai[loop.index0 + 1].SEMESTBKMK != smtsem) %}
+			{{ 'ganjil' }}
+			</table>
+		</td>
+	{% endif %}
+
+	{# {{ nilai[loop.index0 + 1].SEMESTBKMK }} #}
+
+	{% if (nilai[loop.index0 + 1].SEMESTBKMK == '03' or nilai[loop.index0 + 1].SEMESTBKMK == '05' or nilai[loop.index0 + 1].SEMESTBKMK == '07' or loop.last ) and (nilai[loop.index0 + 1].SEMESTBKMK != smtsem) %}
+			{{ 'genap' }}
+			</table>
+		</td>
+	</tr>
+</table>
+	{% endif %}
+
+	{# {% set i = i + 1 %} #}
+{% endfor %} 
+
+{# {{ dump(smtArray) }} #}

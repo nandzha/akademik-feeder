@@ -91,13 +91,11 @@ var ui_window = {
 		    		{},
 					{ view: "button", id:"btsubmit", css: "button_raised", label: "Save", width: 90, click:function(){
 						var form = $$('formMsmhs');
-						if(form.isDirty()){
-							if(!form.validate())
-								return false;
+						if(!form.validate())
+							return false;
 
-							form.save();
-		                    this.getTopParentView().hide(); //hide window
-						};
+						form.save();
+	                    this.getTopParentView().hide(); //hide window
 					}}
 		    	]
 	    	}

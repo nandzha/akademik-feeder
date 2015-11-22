@@ -16,11 +16,10 @@ class Sugest extends AppResources\Models
 
     protected function getFilter($key)
     {
-        $request = new Resources\Request;
-        $filters = $request->get('filter');
+        $filters = $this->request->get('filter');
 
         if ($filters) {
-            $filter = $key . " like '%" . $filters['value'] . "%'";
+            $filter = $filters[$key] . " like '%" . $filters['value'] . "%'";
             $this->conn->filter($filter);
         }
         return false;
@@ -44,10 +43,10 @@ class Sugest extends AppResources\Models
         $this->conn->render_table('satuan_pendidikan', 'id_sp', 'nm_lemb(value)');
     }
 
-    public function ieniang()
+    public function jenjang()
     {
-        $this->getFilter('nm_ieni_didik');
-        $this->conn->render_table('ieniang_pendidikan', 'id_ieni_didik', 'nm_ieni_didik(value)');
+        $this->getFilter('nm_jenj_didik');
+        $this->conn->render_table('jenjang_pendidikan', 'id_jenj_didik', 'nm_jenj_didik(value)');
     }
 
     public function smt()
@@ -70,6 +69,44 @@ class Sugest extends AppResources\Models
         $this->getFilter('nm_pd');
         $this->conn->sort("nm_pd ASC");
         $this->conn->render_table('mahasiswa_suggest', 'id_reg_pd', 'nm_pd(value), nipd');
+    }
+
+    public function dosen()
+    {
+        $this->conn->filter("a.id_kls = '".$this->request->get('id_kls')."'");
+        $this->conn->sort("nm_ptk ASC");
+        $this->conn->render_sql("
+        SELECT
+            a.id_ajar,
+            a.id_kls,
+            b.*,
+            c.nm_kls,
+            c.nm_mk,
+            c.sks_mk,
+            b.nm_ptk AS value
+        FROM
+            ajar_dosen a
+        JOIN (
+            SELECT
+                aa.id_reg_ptk,
+                bb.id_ptk,
+                bb.nm_ptk,
+                bb.nidn
+            FROM
+                dosen_pt aa
+            JOIN dosen bb ON aa.id_ptk = bb.id_ptk
+        ) b ON a.id_reg_ptk = b.id_reg_ptk
+        JOIN (
+            SELECT
+                aa.id_kls,
+                bb.nm_mk,
+                bb.sks_mk,
+                aa.nm_kls
+            FROM
+                kelas_kuliah aa
+            JOIN mata_kuliah bb ON aa.id_mk = bb.id_mk
+        ) c ON a.id_kls = c.id_kls
+            ", 'id_reg_ptk', 'value, nidn');
     }
 
     public function bobotnilai()

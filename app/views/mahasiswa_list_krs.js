@@ -3,19 +3,21 @@ define([
 	"views/modules/mhs_search",
     "views/modules/window",
     "views/modules/grid_mk_kelas",
-    "views/modules/dataProcessing"
-], function(apps,search,ui_window, grid_mk_kelas, handleProcessing){
+    "views/modules/dataProcessing",
+    "views/modules/dataProgressBar",
+], function(apps,search,ui_window, grid_mk_kelas, handleProcessing, notifidata){
 
 var grd_krs = {
 	view:"datatable",
 	id:"grd_krs",
+    footer:true,
 	columns:[
 		{ id: "trash", header:"&nbsp;", width:35, template:"<span  style='cursor:pointer;' class='webix_icon fa-trash-o text_danger'></span>",},
-		{ id: "id_smt", header:"smt", width:80 },
+		{ id: "id_smt", header:"smt", width:80,  },
 		{ id: "kode_mk", header:"kode mk", width:100},
-		{ id: "nm_mk", header:"nama mk", width:300},
+		{ id: "nm_mk", header:"nama mk", width:300, footer:{text:"Total SKS:", colspan:2} },
 		{ id: "nm_kls", header:"kls", width:80, editor:"text"},
-		{ id: "sks_mk", header:"sks", width:80}
+		{ id: "sks_mk", header:"sks", width:80, footer:{content:"summColumn"}}
 	],
 	onClick:{
 		webix_icon:function(e,id,node){
@@ -31,11 +33,24 @@ var grd_krs = {
 	},
 	select:"row",
 	dataFeed : "./krslst/data",
-    on:{
+    ready: notifidata.emptydata,
+    on: {
         onAfterAdd : function(id, index){
             this.addRowCss(id,"bg_info");
-            $$("grd_mk_kls").addRowCss(id,"bg_info");  
+            $$("grd_mk_kls").addRowCss(id,"bg_info");
             this.sort("#id#", "desc", "int");
+        },
+        onBeforeLoad:function(){
+                this.showOverlay("Loading...");
+        },
+        onAfterLoad:function(){
+            this.hideOverlay();
+            if (!this.count()){
+                webix.extend(this, webix.OverlayBox);
+                this.showOverlay("<div style='margin:75px; font-size:20px;'>There is no data</div>");
+            }
+            $$("lbl_krs").define("template", "Jml Matakuliah yang diambil: "+ this.count() );
+            $$("lbl_krs").refresh();
         }
     }
 };
@@ -45,6 +60,7 @@ var btn_add ={
     paddingY:5,
     height:40,
     cols:[
+        {id:"lbl_krs", view :"label", width:250 },
         {},
         { view: "button", type: "iconButton", icon: "plus", css:"button_success", label: "Add Matakuliah", width: 180, click:function(obj){
             var id = $$("listmsmhs").getSelectedId();
@@ -52,6 +68,16 @@ var btn_add ={
 
             if (id) {
                 webix.$$("win_krs_mhs").show();
+            }else{
+                webix.message({ type:"error", text:"Please select one", expire:3000});
+            }
+        }},
+        { view: "button", type: "iconButton", icon: "print", label: "KRS", width: 100, click:function(){
+            var items     = $$("listmsmhs").getSelectedItem();
+            var listmsmhs = $$("listmsmhs").getSelectedId();
+
+            if (items) {
+                $$("grd_krs").exportToPDF("/twig_template/preview/krs?nim="+listmsmhs.id);
             }else{
                 webix.message({ type:"error", text:"Please select one", expire:3000});
             }
@@ -131,7 +157,7 @@ return {
         });
 
         var dp = new webix.DataProcessor({
-            updateFromResponse:true, 
+            updateFromResponse:true,
             autoupdate:true,
             master: $$("grd_krs"),
             url: "connector->./krslst/data",

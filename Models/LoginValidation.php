@@ -135,8 +135,8 @@ class LoginValidation extends Resources\Validation
                 ]
             );
 
-            if (!$next = $this->request->get('next', FILTER_SANITIZE_URL, FILTER_VALIDATE_URL)) {
-                $next = 'dashboard';
+            if (!$nexts = $this->request->get('next', FILTER_SANITIZE_URL, FILTER_VALIDATE_URL)) {
+                $next = $nexts;
             }
 
             return $next;

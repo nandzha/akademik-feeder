@@ -24,7 +24,7 @@ define(["apps"],function(apps){
 				},
 				{
 					rows: [
-					{ view: "text", name: "nm_ibu_kandung", label: "Nama Ibu", labelWidth: "100"},
+					{ view: "text", name: "nm_ibu_kandung", label: "Nama Ibu", labelWidth: "100", disabled:true},
 					{ view: "datepicker", name: "tgl_lahir",label: "Tanggal Lahir", labelWidth: "100", format:"%Y-%m-%d"},
 					{ view: "select", name: "id_agama", label: "Agama", labelWidth: "100",
 						options: [

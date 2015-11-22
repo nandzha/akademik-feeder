@@ -54,6 +54,11 @@ class Sugest extends AppResources\Controller
         $this->sugest->mhs();
     }
 
+    public function dosen()
+    {
+        $this->sugest->dosen();
+    }
+
     public function bobotnilai()
     {
         $this->sugest->bobotnilai();
@@ -61,7 +66,6 @@ class Sugest extends AppResources\Controller
 
     public function wilayah(){
         $wilayah = $this->sugest->wilayah();
-        // var_dump($wilayah);
         $this->outputJSON($wilayah, 200);
     }
 }

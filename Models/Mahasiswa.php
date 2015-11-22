@@ -32,17 +32,6 @@ class Mahasiswa extends AppResources\Models
         $this->conn->render_table("mahasiswa_detail_view", "id_pd", $this->setFields('detail'));
     }
 
-    public function setRules()
-    {
-        return [
-            'nm_pd' => [
-                'rules' => ['required'],
-                'label' => 'Nama Mhs',
-                'filter' => ['trim', 'strtoupper', 'ucwords'],
-            ],
-        ];
-    }
-
     protected function setFields($table)
     {
         $fields = [
@@ -79,7 +68,9 @@ class Mahasiswa extends AppResources\Models
 
         if (empty($this->data)) {
             $this->data = [
-                'nm_pd' => $action->get_value("nm_pd"),
+                'nm_pd'  => $action->get_value("nm_pd"),
+                'nm_ibu_kandung' => $action->get_value("nm_ibu_kandung"),
+                'kode_pos' => $action->get_value("kode_pos"),
             ];
         }
     }
@@ -90,6 +81,7 @@ class Mahasiswa extends AppResources\Models
 
         $action->set_id($this->uuid->v4());
         $this->data['id_pd'] = $action->get_id();
+
 
         if ($this->validation($action)) {
             $this->db->insert("mahasiswa", $this->data);

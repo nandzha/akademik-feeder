@@ -3,7 +3,7 @@ define(function(){
 		"type": "clean",
 		"rows":[
 			{
-				"template": "<span class='webix_icon fa-bar-chart'></span>Orders", "css": "sub_title", "height": 30
+				"template": "<span class='webix_icon fa-bar-chart'></span>Penghasilan Ortu", "css": "sub_title", "height": 35
 			},
 			{
 				"view": "chart", "type": "bar",

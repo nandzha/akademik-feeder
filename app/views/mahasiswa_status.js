@@ -1,7 +1,8 @@
 define([
 	"apps",
-	"views/modules/dataProcessing"
-],function(apps, handleProcessing){
+	"views/modules/dataProcessing",
+	"views/modules/dataProgressBar",
+],function(apps, handleProcessing, notifidata){
 	var grid = {
 		view:"datatable",
 		id:"datatable1",
@@ -17,14 +18,16 @@ define([
 		select:"row", editable:true, editaction:"dblclick",
 
 		save: "connector->mahasiswa/lst",
-		url: "mahasiswa/lst"
+		url: "mahasiswa/lst",
+		ready: notifidata.emptydata,
+		on: notifidata.progressbar
 	};
 
 	var ui_scheme = {
 		type: "material",
 		rows:[
 			grid
-		]	
+		]
 	};
 
 	return {
@@ -34,7 +37,7 @@ define([
 	    },
 	    onInit:function(){
 	    	 var dp = new webix.DataProcessor({
-	            updateFromResponse:true, 
+	            updateFromResponse:true,
 	            autoupdate:true,
 	            master: $$("listdosen"),
 	            url: "connector->./nilai/data",

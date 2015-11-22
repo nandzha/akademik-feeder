@@ -20,17 +20,6 @@ class KuliahAktifitas extends AppResources\Models
         $this->conn->render_sql("");
     }
 
-    public function setRules()
-    {
-        return [
-            'event_name' => [
-                'rules' => ['required', 'min' => 3, 'callback' => 'eventNameIsExist'],
-                'label' => 'Nama Event',
-                'filter' => ['trim', 'strtolower', 'ucwords'],
-            ],
-        ];
-    }
-
     protected function get_values($action)
     {
         $this->data['event_name'] = $action->get_value("event_name");

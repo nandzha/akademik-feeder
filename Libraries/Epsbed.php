@@ -15,7 +15,7 @@ class Epsbed extends Resources\Validation {
         // $this->session      = new Resources\Session;
         // $this->request      = new Resources\Request;
         // $this->rules	= new Epsbedrules;
-        
+
         $this->M 		= new Models\Main;
         $this->rules    = Resources\Config::epsbed();
     }
@@ -43,7 +43,7 @@ class Epsbed extends Resources\Validation {
 
 
     /**
-     * get tahun semester mahasiswa 
+     * get tahun semester mahasiswa
      * semester ganjil september - februari ex: 20131
      * semester genap maret-agustus ex: 20132
      * @return integer tahun semester ex: 20142
@@ -63,78 +63,13 @@ class Epsbed extends Resources\Validation {
         return $thsms;
     }
 
-    public function setRules() {
-        if (! empty($this->ruleType))
-            return $this->rules[$this->ruleType];
-        return false;
-    }
-
-    /**
-     * check if KDKMK exist in THSMS and KDPST 
-     * @param  [type] $field [description]
-     * @param  [type] $value [description]
-     * @param  [type] $label [description]
-     * @return [type]        [description]
-     */
-    public function kdkmkIsExist($field, $value, $label) {
-        $v = $this->value();
-                
-        if( ! $this->checkKDKMK )
-            return true;
-
-        $args = array(
-            'table' => 'tbkmk',
-            'criteria' => array(
-                'KDKMKTBKMK' => $value, 
-                'THSMSTBKMK' => $v['THSMSTBKMK'], 
-                'KDPSTTBKMK' => $v['KDPSTTBKMK'] 
-                )
-            );
-
-        if( ! $is = $this->M->getOne($args) )
-            return true;
-        
-        $this->setErrorMessage($field, $label.' already exists (THSMSTBKMK & KDPSTTBKMK)');            
-
-        return false;
-    }
-
-    /**
-     * cek if tahun semester sudah ada
-     * @param  [type] $field [description]
-     * @param  [type] $value [description]
-     * @param  [type] $label [description]
-     * @return [type]        [description]
-     */
-    public function thsmsIsExist($field, $value, $label) {
-        $v = $this->value();
-
-        if( ! $this->checkTHSMS )
-            return true;
-
-        $args = array(
-            'table' => 'trstsreg',
-            'criteria' => array(
-                'NIMHS' => $v['NIMHS'],
-                'THSMS' => $value
-                )
-            );
-
-        if( ! $is = $this->M->getOne($args) )
-            return true;
-        
-        $this->setErrorMessage($field, ' Already exists (THSMS & NIMHS)');            
-
-        return false;
-    }
-
     public function checkSemester($field, $value, $label) {
         $v = $this->value();
 
         if( ! $this->checkSmt )
             return true;
-        
-        $this->setErrorMessage($field, $label.'Tidak di ijinkan di semester ini');            
+
+        $this->setErrorMessage($field, $label.'Tidak di ijinkan di semester ini');
 
         return false;
     }
@@ -150,7 +85,7 @@ class Epsbed extends Resources\Validation {
             return false;
         }
 
-        $this->setErrorMessage($field, ' Input nilai hanya huruf besar A sampai E');            
+        $this->setErrorMessage($field, ' Input nilai hanya huruf besar A sampai E');
 
         return false;
     }
@@ -158,9 +93,9 @@ class Epsbed extends Resources\Validation {
 
     public function sumSKS($data = array()){
         $jmSks = 0;
-        if (! empty($data) ) 
+        if (! empty($data) )
             foreach ($data as $r) {
-                $jmSks = $jmSks + $r->SKSMKTBKMK;
+                $jmSks = $jmSks + trim($r->sks_mk);
             }
 
         return $jmSks;
@@ -170,10 +105,10 @@ class Epsbed extends Resources\Validation {
         $sksTempuh = 0;
         $nilai = array('A','B','C','D','E');
 
-        if (! empty($data) ) 
+        if (! empty($data) )
             foreach ($data as $r) {
-                if ( in_array($r->NLAKHTRNLM, $nilai) )
-                    $sksTempuh = $sksTempuh + $r->SKSMKTBKMK;
+                if ( in_array(trim($r->nilai_huruf), $nilai) )
+                    $sksTempuh = $sksTempuh + trim($r->sks_mk);
             }
 
         return $sksTempuh;
@@ -183,10 +118,10 @@ class Epsbed extends Resources\Validation {
         $sksLulus = 0;
         $nilai = array('A','B','C');
 
-        if (! empty($data) ) 
+        if (! empty($data) )
             foreach ($data as $r) {
-                if ( in_array($r->NLAKHTRNLM, $nilai) )
-                    $sksLulus = $sksLulus + $r->SKSMKTBKMK;
+                if ( in_array(trim($r->nilai_huruf), $nilai) )
+                    $sksLulus = $sksLulus + trim($r->sks_mk);
             }
 
         return $sksLulus;
@@ -201,14 +136,13 @@ class Epsbed extends Resources\Validation {
         if (! empty($data) ) {
 
             foreach ($data as $r) {
-                if ( in_array($r->NLAKHTRNLM, $nilai) )
-                    $sksTempuh = $sksTempuh + $r->SKSMKTBKMK;
+                if ( in_array(trim($r->nilai_huruf), $nilai) )
+                    $sksTempuh = $sksTempuh + trim($r->sks_mk);
 
-                $total = $r->BOBOTTRNLM * $r->SKSMKTBKMK;
+                $total = $r->nilai_indeks * trim($r->sks_mk);
                 $jmTot = $jmTot + $total;
             }
-
-            $ipk = round($jmTot / $sksTempuh,2);
+            $ipk = round($jmTot / $sksTempuh, 2);
             $strIpk = number_format($ipk,2);
             $strIpk = str_replace(".",",",$strIpk);
 

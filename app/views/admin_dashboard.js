@@ -1,14 +1,11 @@
 define([
 	"apps",
-	"views/modules/dashline",
-	"views/modules/visitors",
-	"views/modules/orders",
-	"views/modules/messages",
-	"views/modules/revenue",
-	"views/modules/tasks",
-	"views/modules/map"
-],function(apps,dashline, visitors, orders, messages, revenue, tasks, map){
-	
+	"views/dash/dashline",
+	"views/dash/mahasiswa",
+	"views/dash/sebaran_nilai",
+	"views/dash/penghasilan_ortu",
+],function(apps,dashline, mahasiswa, sebaran_nilai, penghasilan_ortu){
+
 	var ui_scheme = {
 		type: "line",
 		view:"scrollview",
@@ -20,31 +17,16 @@ define([
 				{
 					type: "space",
 					rows:[
+						mahasiswa,
 						{
 							height: 220,
 							type: "wide",
 							cols: [
-								visitors,
-								orders
-							]
-						},
-						{
-							type: "wide",
-							cols: [
-								messages,
-								revenue
-
-							]
-						},
-						{
-							type: "wide",
-							cols: [
-								tasks,
-								map
+								sebaran_nilai,
+								penghasilan_ortu
 							]
 						}
 					]
-
 				}
 			]
 		}

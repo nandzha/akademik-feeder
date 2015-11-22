@@ -4,7 +4,7 @@ define(["models/visitors"],function(visitors){
 			"type": "clean",
 			"rows":[
 				{
-					"template": "<span class='webix_icon fa-sign-in'></span>Visitor statistics", "css": "sub_title", "height": 30
+					"template": "<span class='webix_icon fa-sign-in'></span>Sebaran Nilai", "css": "sub_title", "height": 35
 				},
 				{
 					"view": "chart", "type": "stackedArea",

@@ -1,0 +1,182 @@
+<head>
+    <title>Cover Absen</title>
+    <style type='text/css'>
+        @media print {
+            @page {
+              size: 33cm 21cm;  /* width height */
+            }
+            .pagestart {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+
+{% set cek = null %}
+{% set nomer = 0 %}
+{% set mengulang = 0 %}
+
+{% for r in absen %}
+
+{% if cek != [r.id_sms, r.kode_mk, r.nm_kls]|join %}
+	</table>
+
+	{% if cek != null %}
+		{% if mengulang == 1 %}
+			*) Perbaikan Nilai C (Tidak Wajib Kuliah)<br />
+		{% endif %}
+
+		{% set mengulang = 0 %}
+	{% endif %}
+
+	</div>
+
+<div class='pagestart'>
+	<table width="1140" border="0">
+		<tr>
+			<td width="1134" align="center">
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>
+						DAFTAR HADIR KULIAH FAKULTAS TEKNIK DAN ILMU KOMPUTER (FASTIKOM)<br />
+						UNIVERSITAS SAINS AL-QUR'AN (UNSIQ) JAWA TENGAH DI WONOSOBO<br />
+						TAHUN AKADEMIK {{r.nm_smt}}
+					</strong>
+				</font>
+				<hr/>
+			</td>
+		</tr>
+	</table>
+
+	<table width="1138" border="0">
+		<tr>
+			<td width="130">
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>DOSEN</strong>
+				</font>
+			</td>
+			<td width="487">
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>: {{ r.nm_ptk }}</strong>
+				</font>
+			</td>
+			<td width="118">
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>PRODI</strong>
+				</font>
+			</td>
+			<td width="385">
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>: {{ r.nm_prodi }} </strong>
+				</font>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>MATA KULIAH</strong>
+				</font>
+			</td>
+			<td>
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>: {{ r.nm_mk }} (Kelas {{ r.nm_kls }}) </strong>
+				</font>
+			</td>
+			<td>
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>SEMESTER</strong>
+				</font>
+			</td>
+			<td>
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>: {{ r.smt }} </strong>
+				</font>
+			</td>
+		</tr>
+	</table>
+
+	<table width="1141" border="1" cellpadding="2" cellspacing="0" bordercolor="#111111" style="border-collapse: collapse">
+		<tr>
+			<td width="26" rowspan="2" align="center">
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>NO</strong>
+				</font>
+			</td>
+			<td width="226" rowspan="2" align="center">
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>NAMA MAHASISWA</strong>
+				</font>
+			</td>
+			<td width="70" rowspan="2" align="center">
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>NIM</strong>
+				</font>
+			</td>
+			<td colspan="14" align="center">
+				<font face="Arial, Helvetica, sans-serif">
+					<strong>PERTEMUAN</strong>
+				</font>
+			</td>
+		</tr>
+		<tr>
+			<td align="center">1</td>
+			<td align="center">2</td>
+			<td align="center">3</td>
+			<td align="center">4</td>
+			<td align="center">5</td>
+			<td align="center">6</td>
+			<td align="center">7</td>
+			<td align="center">8</td>
+			<td align="center">9</td>
+			<td align="center">10</td>
+			<td align="center">11</td>
+			<td align="center">12</td>
+			<td align="center">13</td>
+			<td align="center">14</td>
+		</tr>
+
+		{% set cek = [r.id_sms, r.kode_mk, r.nm_kls]|join %}
+		{% set nomer = 0 %}
+
+{% endif %}
+
+		{% set nomer = nomer+1 %}
+		<tr>
+			<td align="right">
+				<font face="Arial, Helvetica, sans-serif size="-1"">
+					{{ nomer }}
+				</font>
+			</td>
+			<td>
+				<font face="Arial, Helvetica, sans-serif" size="-1">
+					{{ r.nm_pd }}
+				</font>
+			</td>
+			<td>
+				<font face="Arial, Helvetica, sans-serif" size="-1">
+					{{ r.nipd }}
+				</font>
+			</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+			<td width="55">&nbsp;</td>
+		</tr>
+
+{% endfor %}
+	</table>
+
+{% if mengulang == 1  %}
+	*) Perbaikan Nilai C (Tidak Wajib Kuliah)
+{% endif %}
+
+</div>

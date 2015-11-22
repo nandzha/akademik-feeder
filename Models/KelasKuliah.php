@@ -26,6 +26,19 @@ class KelasKuliah extends AppResources\Models
         $this->conn->render_table("list_kelas_perkuliahan_view", "id_kls", $this->setFields("list"));
     }
 
+    public function detail_kelas()
+    {
+        if ($this->session->getValue('desc') != 'ALL') {
+            $this->conn->filter('id_sms', $this->session->getValue('desc'), '=');
+        }
+
+        if($this->request->get('id')){
+            $this->conn->filter('id_kls', $this->request->get('id', FILTER_SANITIZE_STRING), '=');
+        }
+
+        $this->conn->render_table("detail_kelas_kuliah_view", "id_kls", $this->setFields("detail"));
+    }
+
     public function setRules()
     {
         return [
@@ -73,6 +86,13 @@ class KelasKuliah extends AppResources\Models
                 "nm_smt",
                 "smt"
             ],
+            "detail" =>[
+                "peserta_kelas",
+                "dosen_mengajar",
+                "kode_mk",
+                "nm_mk",
+                "nm_kls"
+            ]
         ];
         return implode(",", $fields[$table]);
     }

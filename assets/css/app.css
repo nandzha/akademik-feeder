@@ -2,6 +2,21 @@
  * customize color skin
  * by aviq
  */
+
+.webix_property_label_line {
+    color: #FFFFFF;
+    background: #7B1FA2;
+    height: 30px;
+    line-height: 30px;
+}
+.webix_property_label, .webix_property_value {
+    height: 30px;
+    line-height: 30px;
+}
+.webix_progress_bottom .webix_progress_state,.webix_progress_top .webix_progress_state{width:0;height:6px;background:#7B1FA2;-moz-transition:width 3s;transition:width 3s}
+
+.webix_progress_icon .webix_progress_state{font-family:FontAwesome;font-size:50px;position:absolute;left:50%;top:50%;margin-left:-25px;margin-top:-25px;display:inline-block;color:#b3b3b3}
+
 .webix_column:first-child > div.webix_row_select {
     border-bottom: 1px solid #edf2f1;
     box-shadow: 5px 0 0 #7B1FA2 inset;

@@ -33,7 +33,7 @@ class Alias extends Resources\Controller
         $args = func_get_args();
 
         if (empty($args)) {
-            $args = ['dashboard', 'index'];
+            $args = ['login', 'index'];
         }
 
         if (!isset($args[1]) && !empty($args[0])) {
@@ -47,20 +47,44 @@ class Alias extends Resources\Controller
         // die(var_dump($args));
 
         $route = [
+            'login' => [
+                'class' => '\\Controllers\MahasiswaFront',
+                'method' => 'login',
+            ],
             'signout' => [
-                'class' => '\\Controllers\Login',
+                'class' => '\\Controllers\MahasiswaFront',
                 'method' => 'signout',
             ],
             'testing' => [
                 'class' => '\\Controllers\Test',
                 'method' => $args[1],
             ],
+            'profile' => [
+                'class' => '\\Controllers\MahasiswaFront',
+                'method' => 'profile',
+            ],
+            'krs' => [
+                'class' => '\\Controllers\MahasiswaFront',
+                'method' => 'krs',
+            ],
+            'sp' => [
+                'class' => '\\Controllers\MahasiswaFront',
+                'method' => 'sp',
+            ],
+            'nilai' => [
+                'class' => '\\Controllers\MahasiswaFront',
+                'method' => 'nilai',
+            ],
+            'skripsi' => [
+                'class' => '\\Controllers\MahasiswaFront',
+                'method' => 'skripsi',
+            ],
             'admin' => [
-                'class' => '\\Controllers\Login',
+                'class' => '\\Controllers\LoginAdministrator',
                 'method' => 'index',
                 'sub' => [
                     'signout' => [
-                        'class' => '\\Controllers\Login',
+                        'class' => '\\Controllers\LoginAdministrator',
                         'method' => 'signout',
                     ],
                     'mahasiswa' => [
@@ -79,12 +103,24 @@ class Alias extends Resources\Controller
                         'class' => '\\Controllers\Kuliah',
                         'method' => $args[2],
                     ],
+                    'kelaslst' => [
+                        'class' => '\\Controllers\Kuliah',
+                        'method' => 'kelaslst',
+                    ],
                     'prodi' => [
                         'class' => '\\Controllers\Prodi',
                         'method' => $args[2],
                     ],
                     'tools' => [
                         'class' => '\\Controllers\Tools',
+                        'method' => $args[2],
+                    ],
+                    'cetak' => [
+                        'class' => '\\Controllers\Cetak',
+                        'method' => $args[2],
+                    ],
+                    'preview' => [
+                        'class' => '\\Controllers\Preview',
                         'method' => $args[2],
                     ],
                 ],

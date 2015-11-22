@@ -55,19 +55,6 @@ class DosenAktifitas extends AppResources\Models
         ", "id_ajar", $this->setFields());
     }
 
-    public function setRules()
-    {
-        return [
-            'id_kls' => [
-                'rules' => ['required'],
-            ],
-
-            'id_reg_ptk' => [
-                'rules' => ['required'],
-            ],
-        ];
-    }
-
     protected function get_values($action)
     {
         $this->data = [

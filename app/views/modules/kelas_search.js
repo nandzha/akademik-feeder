@@ -24,6 +24,6 @@ define(function(){
 		],
 		select:"row",
 		tooltip:true,
-		url:"./kelaslst"
+		url:"/twig_template/admin/kelaslst"
 	}
 });

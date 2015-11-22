@@ -1,0 +1,49 @@
+{% for item in nilai %}
+
+    <p>item itself: {{ item.KDKMKTRNLM }}</p>
+
+    {% if loop.length > 1 %}
+        {% if loop.first == false %}
+            {% set previous_item = nilai[loop.index0 - 1] %}
+            <p>previous item: {{ previous_item.KDKMKTRNLM }}</p>
+        {% endif %}
+
+        {% if loop.last == false %}
+            {% set next_item = nilai[loop.index0 + 1] %}
+            <p>next item: {{ next_item.KDKMKTRNLM }}</p>
+        {% endif %}
+
+    {% else %}
+
+        <p>There is only one item.</p>
+
+    {% endif %}
+{% endfor %}
+
+{# 
+{% for item in nilai %}
+
+    <p>item itself: {{ item.KDKMKTRNLM }}</p>
+
+    {% if loop.length > 1 %}
+        {% if loop.first %}
+            {% set previous_item = nilai[loop.length - 1].KDKMKTRNLM %}
+        {% else %}
+            {% set previous_item = nilai[loop.index0 - 1].KDKMKTRNLM %}
+        {% endif %}
+
+        {% if loop.last %}
+            {% set next_item = nilai[0].KDKMKTRNLM %}
+        {% else %}
+            {% set next_item = nilai[loop.index0 + 1].KDKMKTRNLM %}
+        {% endif %}
+
+        <p>previous item: {{ previous_item }}</p>
+        <p>next item: {{ next_item }}</p>
+
+    {% else %}
+
+        <p>There is only one item.</p>
+
+    {% endif %}
+{% endfor %} #}

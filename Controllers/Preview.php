@@ -367,10 +367,10 @@ class Preview extends AppResources\Controller
                 FROM
                     mahasiswa aa
                 JOIN mahasiswa_pt bb ON aa.id_pd = bb.id_pd
-            ) c ON c.id_reg_pd = a.id_reg_pd WHERE a.id_reg_pd = '".$id_reg_pd."' ");
+            ) c ON c.id_reg_pd = a.id_reg_pd WHERE a.id_reg_pd = '".$id_reg_pd."' ORDER BY b.id_smt");
 
         $data['sumSKS'] = $this->epsbed->sumSKS($data['krs']);
-
+        $data['smt'] = $this->epsbed->getSemester($data['krs'][0]->mulai_smt);
         return $this->view->render('print/krs.html', $data);
     }
 

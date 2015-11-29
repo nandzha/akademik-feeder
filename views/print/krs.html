@@ -13,7 +13,7 @@
 				<font "Times New Roman, Times, serif" size="+1">
 					<strong> UNIVERSITAS SAINS AL-QUR'AN (UNSIQ) <br />
 						JAWA TENGAH DI WONOSOBO<br />
-						FAK-TEKNIK &amp; ILMU KOMPUTER
+						FAKULTAS TEKNIK & ILMU KOMPUTER
 					</strong>
 				</font>
 			</td>
@@ -37,7 +37,7 @@
 			<td><font face="Times New Roman, Times, serif">Nama</font></td>
 			<td><font face="Times New Roman, Times, serif">: {{ krs[0].nm_pd }} </font></td>
 			<td><font face="Times New Roman, Times, serif">TA/Smt</font></td>
-			<td><font face="Times New Roman, Times, serif">: {{ krs[0].id_smt }} / {{ krs[0].semester }} </font></td>
+			<td><font face="Times New Roman, Times, serif">: {{ krs[0].mulai_smt }} / {{ smt }} </font></td>
 		</tr>
 	</table>
 
@@ -47,9 +47,9 @@
 			<td width="69"><font face="Times New Roman, Times, serif">Kode MK</font></td>
 			<td width="256"><font face="Times New Roman, Times, serif">Nama Matakuliah</font></td>
 			<td width="30"><font face="Times New Roman, Times, serif">SKS</font></td>
-			<td width="24"><font face="Times New Roman, Times, serif">Smt</font></td>
+			<td width="24"><font face="Times New Roman, Times, serif">SMT</font></td>
 			<td width="191"><font face="Times New Roman, Times, serif">Nama Dosen</font></td>
-			<td width="23"><font face="Times New Roman, Times, serif">Kls</font></td>
+			<td width="23"><font face="Times New Roman, Times, serif">KLS</font></td>
 		</tr>
 		{% for r in krs %}
 		<tr>

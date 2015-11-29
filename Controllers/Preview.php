@@ -321,28 +321,54 @@ class Preview extends AppResources\Controller
 
     public function krs()
     {
-        $args = array(
-            'trnlm' => array(
-                'table' => 'V_TRNLM',
-                'criteria' => array(
-                    'NIMHSTRNLM' => $this->session->getValue('userId'), //'2014110002',
-                    'THSMSTRNLM' => $this->session->getValue('thsmst'), //'20142',
-                    'KDPSTTRNLM' => $this->session->getValue('prodi'), //'61201'
-                ),
-                'orderBy' => 'IDTRNLM',
-            ),
+        $id_smt    = $this->data['idsmt'];
+        $id_reg_pd = $this->req->post('id_reg_pd', FILTER_SANITIZE_STRING);
+        $data['krs'] = $this->db->results("
+            SELECT
+                a.id_nilai,
+                a.id_kls,
+                a.id_reg_pd,
+                a.nilai_angka,
+                a.nilai_huruf,
+                a.nilai_indeks,
+                b.*,
+                c.nipd,
+                c.nm_pd,
+                c.mulai_smt,
+                get_semester(b.id_smt, c.mulai_smt) AS semester
+            FROM
+                nilai a
+            JOIN (
+                SELECT
+                    aa.id_kls,
+                    aa.id_mk,
+                    aa.id_sms,
+                    aa.id_smt,
+                    bb.kode_mk,
+                    bb.nm_mk,
+                    bb.sks_mk,
+                    dd.nm_lemb AS nm_prodi,
+                    dd.kode_prodi,
+                    ee.nm_jenj_didik,
+                    aa.nm_kls
+                FROM
+                    kelas_kuliah aa
+                JOIN mata_kuliah bb ON aa.id_mk = bb.id_mk
+                JOIN semester cc ON aa.id_smt = cc.id_smt
+                JOIN sms dd ON aa.id_sms = dd.id_sms
+                JOIN jenjang_pendidikan ee ON dd.id_jenj_didik = ee.id_jenj_didik
+            ) b ON a.id_kls = b.id_kls
+            JOIN (
+                SELECT
+                    bb.nipd,
+                    aa.nm_pd,
+                    bb.id_reg_pd,
+                    SUBSTR(bb.mulai_smt,1,4) AS mulai_smt
+                FROM
+                    mahasiswa aa
+                JOIN mahasiswa_pt bb ON aa.id_pd = bb.id_pd
+            ) c ON c.id_reg_pd = a.id_reg_pd WHERE a.id_reg_pd = '".$id_reg_pd."' ");
 
-            'mhs' => array(
-                'table' => 'V_MHS_PROP',
-                'criteria' => array(
-                    'NIMHSMSMHS' => $this->session->getValue('userId'), //'2014110002',
-                ),
-            ),
-        );
-
-        $data['krs'] = $this->M->getAll($args['trnlm']);
-        $data['mhs'] = $this->M->getOne($args['mhs']);
-        $data['smt'] = $this->epsbed->getSemester($data['mhs']->TAHUNMSMHS);
         $data['sumSKS'] = $this->epsbed->sumSKS($data['krs']);
 
         return $this->view->render('print/krs.html', $data);

@@ -3,7 +3,7 @@ namespace Libraries\AppResources;
 use Resources;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
-
+use Twig_Extensions_Extension_Intl;
 /**
  * Twig driver
  */
@@ -41,7 +41,7 @@ class TwigDriver implements ViewDriverInterface {
 		$this->twig = new Twig_Environment($twigLoader, $this->args['default']);
 
 		$this->twig->addExtension(new AppExtension());
-        // $this->twig->addExtension(new \Twig_Extensions_Extension_Intl());
+        // $this->twig->addExtension(new Twig_Extensions_Extension_Intl());
 
     	if ($this->args['default']['debug'])
     		$this->twig->addExtension(new \Twig_Extension_Debug());

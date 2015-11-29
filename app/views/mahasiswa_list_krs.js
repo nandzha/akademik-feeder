@@ -73,11 +73,11 @@ var btn_add ={
             }
         }},
         { view: "button", type: "iconButton", icon: "print", label: "KRS", width: 100, click:function(){
-            var items     = $$("listmsmhs").getSelectedItem();
             var listmsmhs = $$("listmsmhs").getSelectedId();
+            var values = {id_reg_pd:listmsmhs.id};
 
-            if (items) {
-                $$("grd_krs").exportToPDF("/twig_template/preview/krs?nim="+listmsmhs.id);
+            if (listmsmhs) {
+                webix.send("/twig_template/preview/krs",values, 'POST', '_balnk');
             }else{
                 webix.message({ type:"error", text:"Please select one", expire:3000});
             }

@@ -10,10 +10,10 @@
 		<tr>
 			<td width="92"  align="right"><img src="/assets/imgs/LogoKRS.png" width="92" height="87" /></td>
 			<td width="470"  align="center">
-				<font "Times New Roman, Times, serif" size="+1"> 
+				<font "Times New Roman, Times, serif" size="+1">
 					<strong> UNIVERSITAS SAINS AL-QUR'AN (UNSIQ) <br />
 						JAWA TENGAH DI WONOSOBO<br />
-						FAK-TEKNIK &amp; ILMU KOMPUTER 
+						FAK-TEKNIK &amp; ILMU KOMPUTER
 					</strong>
 				</font>
 			</td>
@@ -29,15 +29,15 @@
 	<table>
 		<tr>
 			<td width="77"><font face="Times New Roman, Times, serif"> NIM</font></td>
-			<td width="287"><font face="Times New Roman, Times, serif">: {{ mhs.NIMHSMSMHS }} </font></td>
+			<td width="287"><font face="Times New Roman, Times, serif">: {{ krs[0].nipd }} </font></td>
 			<td width="88"><font face="Times New Roman, Times, serif">Prodi/Jenjang</font></td>
-			<td width="190"><font face="Times New Roman, Times, serif">: {{ mhs.NMPSTMSPST }} / {{ mhs.JENJANG }} </font></td>
+			<td width="190"><font face="Times New Roman, Times, serif">: {{ krs[0].nm_prodi }} / {{ krs[0].nm_jenj_didik }} </font></td>
 		</tr>
 		<tr>
 			<td><font face="Times New Roman, Times, serif">Nama</font></td>
-			<td><font face="Times New Roman, Times, serif">: {{ mhs.nm_pd }} </font></td>
+			<td><font face="Times New Roman, Times, serif">: {{ krs[0].nm_pd }} </font></td>
 			<td><font face="Times New Roman, Times, serif">TA/Smt</font></td>
-			<td><font face="Times New Roman, Times, serif">: {{ mhs.TAHUNMSMHS }} / {{ smt }} </font></td>
+			<td><font face="Times New Roman, Times, serif">: {{ krs[0].id_smt }} / {{ krs[0].semester }} </font></td>
 		</tr>
 	</table>
 
@@ -54,13 +54,13 @@
 		{% for r in krs %}
 		<tr>
 			<td width="22" align="right"><font face="Times New Roman, Times, serif" size="-1"> {{ loop.index }} </font></td>
-			<td width="69" align="left"><font face="Times New Roman, Times, serif" size="-1"> {{ r.KDKMKTRNLM }} </font></td>
-			<td width="256" align="left"><font face="Times New Roman, Times, serif" size="-1"> {{ r.NAKMKTBKMK }} </font></td>
-			<td width="30" align="center"><font face="Times New Roman, Times, serif" size="-1"> {{ r.SKSMKTBKMK }} </font></td>
-			<td width="24" align="center"><font face="Times New Roman, Times, serif" size="-1"> {{ r.SEMESTBKMK }} </font></td>
-			<td width="191" align="left"><font face="Times New Roman, Times, serif" size="-1"> {{ r.NMDOSTBDOS }}, {{ r.GELARTBDOS }} </font></td>
-			<td width="23" align="center"><font face="Times New Roman, Times, serif" size="-1"> {{ r.KELASTRNLM }} </font></td>
-		</tr>  
+			<td width="69" align="left"><font face="Times New Roman, Times, serif" size="-1"> {{ r.kode_mk }} </font></td>
+			<td width="256" align="left"><font face="Times New Roman, Times, serif" size="-1"> {{ r.nm_mk }} </font></td>
+			<td width="30" align="center"><font face="Times New Roman, Times, serif" size="-1"> {{ r.sks_mk }} </font></td>
+			<td width="24" align="center"><font face="Times New Roman, Times, serif" size="-1"> {{ r.semester }} </font></td>
+			<td width="191" align="left"><font face="Times New Roman, Times, serif" size="-1"> {{ r.nm_ptk }} </font></td>
+			<td width="23" align="center"><font face="Times New Roman, Times, serif" size="-1"> {{ r.nm_kls }} </font></td>
+		</tr>
 		{% endfor %}
 		<tr>
 			<td>&nbsp;</td>
@@ -70,7 +70,7 @@
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
-		</tr>   
+		</tr>
 	</table>
 	*)Mata Kuliah Her (Perbaikan Nilai C)<br />
 
@@ -78,7 +78,7 @@
 		<tr>
 			<td width="168" rowspan="5" align="left" valign="top"> Photoss </td>
 			<td width="274">&nbsp;</td>
-			<td width="203"><font face="Times New Roman, Times, serif">Wonosobo, {{ "now"|localizeddate('long', 'none', 'ID') }} </font></td>
+			<td width="250"><font face="Times New Roman, Times, serif">Wonosobo, {# {{ "now"|localizeddate('long', 'none', 'ID') }} #} </font></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -90,7 +90,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><font face="Times New Roman, Times, serif"> {{ mhs.NMDOSTBDOS }}, {{ mhs.GELARTBDOS }} </font></td>
+			<td><font face="Times New Roman, Times, serif"> {{ krs.NMDOSTBDOS }}, {{ krs.GELARTBDOS }} </font></td>
 		</tr>
 	</table>
 

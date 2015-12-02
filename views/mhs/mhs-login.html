@@ -10,10 +10,8 @@
 		background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGwAAAAPCAIAAACOZL1uAAABGklEQVR42u2Y2w6DMAiGy3zDndzp3XZ8TdtRMVhLrI1miUz/K0L9xFBa2OByeFlrnXObWgBgjHG10I82etjPsrXSFNpo0Co9kENpjAW38oPLVVXRQlEU9K7IIzVIoU2B0UZPJqUxlk9ilGnOfbQb4QbK/ZEUraIIyaQ0xoLr8R3VP8FhtTMWnoKVaim8ExP1T+ICZqVPzdIoOO0eUf1z7jnrfJWyR56aRVOYRNPtNaywbnk3ohclqOiDMimNseC8f8q+Juu2r6QT1LgljbF8YxncTDlYTSyBP4vVjDjpC6JvBP3FZaQxlk+iLHLS/NviTKh2TlQ5oM2D8o1lyvi+Uigot/cpPyRXCj3NnAhj/9JIUKY7hWVSGmN9AcsfIylvlaWJAAAAAElFTkSuQmCC);
 	}
 </style>
-	<div id="areaA">
-	{{signature}} <br>
-	{{msgUser}} <br>
-	</div>
+	<h5>{{msgUser}}</h5>
+	<div id="areaA"></div>
 {% endblock %}
 
 {% block script %}
@@ -24,14 +22,12 @@
 			    width:350,
 				container:"areaA",
 				position:"center",
-			    head:"Login",
+			    head:"Login Mahasiswa",
 				body:{
 					view:"form", scroll:false,
 					id:"login",
 					width:350,
 					elements:[
-						// { name:"signature", view:"text", value:"{{signature}}"},
-						{ name:"smt", view:"select", label:"Semester", options:"./sugest/smt"},
 						{ name:"username", view:"text", label:"Username"},
 						{ name:"password", view:"text", type:"password", label:"Password"},
 						{ margin:5, cols:[
@@ -42,13 +38,6 @@
 								if(form.isDirty()){
 									if(!form.validate())
 										return false;
-
-									/*webix.ajax().post("/home", values, function(t,res) {
-										var res = res.json();
-										if (res.messages.login) {
-											window.location.href = "mhs";
-										};
-									});	*/
 									webix.send("",values);
 								};
 							}},

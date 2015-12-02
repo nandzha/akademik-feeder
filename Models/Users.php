@@ -23,7 +23,7 @@ class Users
     public function getOneMhs($criteria = array())
     {
 
-        return $this->db->getOne('mhs_detail', $criteria);
+        return $this->db->getOne('mahasiswa_pt', $criteria);
     }
 
     public function getAll($args = array())

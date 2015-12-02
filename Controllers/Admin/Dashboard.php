@@ -1,5 +1,5 @@
 <?php
-namespace Controllers;
+namespace Controllers\Admin;
 
 use Dhtmlx\Connector;
 use Libraries\AppResources;

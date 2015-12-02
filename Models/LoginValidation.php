@@ -70,6 +70,7 @@ class LoginValidation extends Resources\Validation
                     ],
                     'label' => 'Username',
                     'filter' => ['trim', 'strtolower'],
+                    'filter' => ['trim', [$this, 'sanitizeString']],
                 ],
                 'password' => [
                     'rules' => [
@@ -77,10 +78,11 @@ class LoginValidation extends Resources\Validation
                         'min' => 3,
                     ],
                     'label' => 'Password',
+                    'filter' => ['trim', [$this, 'sanitizeString']],
                 ],
             ],
             'mhsSignin' => [
-                'nim' => [
+                'username' => [
                     'rules' => [
                         'required',
                         'min' => 3,
@@ -88,6 +90,7 @@ class LoginValidation extends Resources\Validation
                     ],
                     'label' => 'Nim',
                     'filter' => ['trim', 'strtolower'],
+                    'filter' => ['trim', [$this, 'sanitizeString']],
                 ],
                 'password' => [
                     'rules' => [
@@ -95,6 +98,7 @@ class LoginValidation extends Resources\Validation
                         'min' => 4,
                     ],
                     'label' => 'Password',
+                    'filter' => ['trim', [$this, 'sanitizeString']],
                 ],
             ],
             'post' => [
@@ -150,22 +154,21 @@ class LoginValidation extends Resources\Validation
     {
         $value = $this->value();
 
-        $user = $this->user->getOneMhs(['nim' => $value['nim']]);
-
-        if ($user && md5($value['password']) == $user->pass) {
+        $user = $this->user->getOneMhs(['nipd' => $value['username']]);
+        if ($user && md5($value['password']) == $user->screet_key) {
 
             $this->session->setValue(
                 [
-                    'userId' => $user->nim,
-                    'namaPengguna' => $user->nmmhs,
-                    'prodi' => $user->jur,
+                    'userId' => $user->nipd,
+                    'namaPengguna' => $user->id_pd,
+                    'prodi' => $user->id_sms,
                     'thsmst' => $this->epsbed->getTahunSmt(),
                     'grupId' => 2, //mahasiswa
                 ]
             );
 
             if (!$next = $this->request->get('next', FILTER_SANITIZE_URL, FILTER_VALIDATE_URL)) {
-                $next = 'home';
+                $next = 'profile';
             }
 
             return $next;

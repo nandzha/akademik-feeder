@@ -55,9 +55,15 @@ class Controller extends Resources\Controller {
 
 	}
 
-    public function propertyAkademik(){
+    public function propertyAkademik($idsmt=false){
         $helper = new Models\Helpers;
-        $semester = $helper->getSemester($this->session->getValue('idsmt'));
+
+        $SessionidSmt = $idsmt;
+        if($idsmt = $this->session->getValue('idsmt')){
+            $SessionidSmt = $idsmt;
+        }
+
+        $semester = $helper->getSemester($SessionidSmt);
         $data = [
             'idsmt'    => $this->session->getValue('idsmt'),
             'semester' => $semester->nm_smt

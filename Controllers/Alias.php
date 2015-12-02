@@ -44,15 +44,13 @@ class Alias extends Resources\Controller
             $args[2] = 'index';
         }
 
-        // die(var_dump($args));
-
         $route = [
             'login' => [
-                'class' => '\\Controllers\MahasiswaFront',
-                'method' => 'login',
+                'class' => '\\Controllers\LoginMahasiswa',
+                'method' => 'index',
             ],
             'signout' => [
-                'class' => '\\Controllers\MahasiswaFront',
+                'class' => '\\Controllers\LoginMahasiswa',
                 'method' => 'signout',
             ],
             'testing' => [
@@ -60,26 +58,26 @@ class Alias extends Resources\Controller
                 'method' => $args[1],
             ],
             'profile' => [
-                'class' => '\\Controllers\MahasiswaFront',
+                'class' => '\\Controllers\Mahasiswa',
                 'method' => 'profile',
             ],
             'krs' => [
-                'class' => '\\Controllers\MahasiswaFront',
+                'class' => '\\Controllers\Mahasiswa',
                 'method' => 'krs',
             ],
             'sp' => [
-                'class' => '\\Controllers\MahasiswaFront',
+                'class' => '\\Controllers\Mahasiswa',
                 'method' => 'sp',
             ],
             'nilai' => [
-                'class' => '\\Controllers\MahasiswaFront',
+                'class' => '\\Controllers\Mahasiswa',
                 'method' => 'nilai',
             ],
             'skripsi' => [
-                'class' => '\\Controllers\MahasiswaFront',
+                'class' => '\\Controllers\Mahasiswa',
                 'method' => 'skripsi',
             ],
-            'admin' => [
+            'adminer' => [
                 'class' => '\\Controllers\LoginAdministrator',
                 'method' => 'index',
                 'sub' => [
@@ -88,39 +86,39 @@ class Alias extends Resources\Controller
                         'method' => 'signout',
                     ],
                     'mahasiswa' => [
-                        'class' => '\\Controllers\Mahasiswa',
+                        'class' => '\\Controllers\Admin\Mahasiswa',
                         'method' => $args[2],
                     ],
                     'dashboard' => [
-                        'class' => '\\Controllers\Dashboard',
+                        'class' => '\\Controllers\Admin\Dashboard',
                         'method' => $args[2],
                     ],
                     'dosen' => [
-                        'class' => '\\Controllers\Dosen',
+                        'class' => '\\Controllers\Admin\Dosen',
                         'method' => $args[2],
                     ],
                     'kuliah' => [
-                        'class' => '\\Controllers\Kuliah',
+                        'class' => '\\Controllers\Admin\Kuliah',
                         'method' => $args[2],
                     ],
                     'kelaslst' => [
-                        'class' => '\\Controllers\Kuliah',
+                        'class' => '\\Controllers\Admin\Kuliah',
                         'method' => 'kelaslst',
                     ],
                     'prodi' => [
-                        'class' => '\\Controllers\Prodi',
+                        'class' => '\\Controllers\Admin\Prodi',
                         'method' => $args[2],
                     ],
                     'tools' => [
-                        'class' => '\\Controllers\Tools',
+                        'class' => '\\Controllers\Admin\Tools',
                         'method' => $args[2],
                     ],
                     'cetak' => [
-                        'class' => '\\Controllers\Cetak',
+                        'class' => '\\Controllers\Admin\Cetak',
                         'method' => $args[2],
                     ],
                     'preview' => [
-                        'class' => '\\Controllers\Preview',
+                        'class' => '\\Controllers\Admin\Preview',
                         'method' => $args[2],
                     ],
                 ],

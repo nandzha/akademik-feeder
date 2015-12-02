@@ -6,10 +6,10 @@ use Libraries\AppResources;
 use Models;
 use Resources;
 
-class LoginAdministrator extends AppResources\Controller
+class LoginMahasiswa extends AppResources\Controller
 {
-    protected $ruleType = 'signin';
-    protected $pagesUrl = 'adminer/';
+    protected $ruleType = 'mhsSignin';
+    protected $pagesUrl = false;
 
     public function __construct()
     {
@@ -24,8 +24,8 @@ class LoginAdministrator extends AppResources\Controller
     public function index()
     {
 
-        if ($this->userId = $this->session->getValue('penggunaId')) {
-            $this->redirect('adminer/dashboard');
+        if ($this->userId = $this->session->getValue('userId')) {
+            $this->redirect('profile');
             return;
         }
 
@@ -52,7 +52,7 @@ class LoginAdministrator extends AppResources\Controller
             }
         }
 
-        return $this->view->render('admin-login.html', $data);
+        return $this->view->render('mhs/mhs-login.html', $data);
     }
 
     public function setConfig($ruleType, $pagesUrl){
@@ -89,6 +89,6 @@ class LoginAdministrator extends AppResources\Controller
     public function signout()
     {
         $this->session->destroy();
-        $this->redirect('adminer');
+        $this->redirect('login');
     }
 }

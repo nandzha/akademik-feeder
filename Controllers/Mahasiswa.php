@@ -17,7 +17,7 @@ class Mahasiswa extends AppResources\Controller
     private function is_login()
     {
         if (!$this->login()) {
-            $this->redirect();
+            $this->redirect("login");
         }
 
     }

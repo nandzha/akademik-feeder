@@ -77,7 +77,7 @@ class Alias extends Resources\Controller
                 'class' => '\\Controllers\Mahasiswa',
                 'method' => 'skripsi',
             ],
-            'adminer' => [
+            'adm' => [
                 'class' => '\\Controllers\LoginAdministrator',
                 'method' => 'index',
                 'sub' => [

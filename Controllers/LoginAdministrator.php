@@ -9,7 +9,7 @@ use Resources;
 class LoginAdministrator extends AppResources\Controller
 {
     protected $ruleType = 'signin';
-    protected $pagesUrl = 'adminer/';
+    protected $pagesUrl = 'adm/';
 
     public function __construct()
     {
@@ -25,7 +25,7 @@ class LoginAdministrator extends AppResources\Controller
     {
 
         if ($this->userId = $this->session->getValue('penggunaId')) {
-            $this->redirect('adminer/dashboard');
+            $this->redirect('adm/dashboard');
             return;
         }
 
@@ -89,6 +89,6 @@ class LoginAdministrator extends AppResources\Controller
     public function signout()
     {
         $this->session->destroy();
-        $this->redirect('adminer');
+        $this->redirect('adm');
     }
 }

@@ -8,9 +8,9 @@ use Libraries;
 class Sync extends Resources\Controller
 {
 
-    protected $url = 'http://unsiq.ac.id:8082/ws/live.php?wsdl';
-    protected $username = '061030';
-    protected $password = '29012015';
+    protected $url = '';
+    protected $username = '';
+    protected $password = '';
     protected $dbAccess;
 
     public function __construct()
